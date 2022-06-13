@@ -65,6 +65,6 @@ javac -version
 docker-compose -f docker-compose-local.yml up 
 ```
 
-# Swagger - API description format
+## Swagger - API description format
 - Server runs on port 8080(locally), the url to swagger is as shown below,
-- http://localhost:8080/swagger-ui/
+  http://localhost:8080/swagger-ui/index.html
