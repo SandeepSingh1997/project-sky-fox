@@ -34,7 +34,7 @@ javac -version
    - Alternatively add the export commands to an env file and run ‘source env’
    ```
    export POSTGRES_DB=bookingengine
-   export POSTGRES_USERNAME=bookingengine
+   export POSTGRES_USER=bookingengine
    export DB_PASSWORD=postgres
    ```
 - params
