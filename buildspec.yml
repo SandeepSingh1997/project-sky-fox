@@ -12,7 +12,7 @@ phases:
   build:
     commands:
       - echo "Build step"
-#      - ./gradlew test
+      - ./gradlew test
       - ./gradlew --build-cache --info bootjar
       - export $(cat gradle.properties | grep appVersion)
       - docker build -t bookingapi:latest . --no-cache --build-arg VERSION="$appVersion-$CI_COMMIT_SHORT_SHA" --build-arg REGISTRY_URI="${REGISTRY_URI}"
