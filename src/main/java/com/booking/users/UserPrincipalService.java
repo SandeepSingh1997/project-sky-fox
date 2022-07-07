@@ -25,4 +25,7 @@ public class UserPrincipalService implements UserDetailsService {
     public User findUserByUsername(String username) throws UsernameNotFoundException {
         return userRepository.findByUsername(username).orElseThrow(() -> new UsernameNotFoundException("User not found"));
     }
+
+    public void changePassword() {
+    }
 }
