@@ -1,5 +1,6 @@
 package com.booking.users;
 
+import com.booking.exceptions.PasswordMismatchException;
 import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -28,7 +29,7 @@ public class UserController {
         return userDetails;
     }
 
-    public void changePassword(Principal principal, ChangePasswordRequest changePasswordRequest) {
+    public void changePassword(Principal principal, ChangePasswordRequest changePasswordRequest) throws PasswordMismatchException {
 
         userPrincipalService.changePassword(principal.getName(), changePasswordRequest);
     }

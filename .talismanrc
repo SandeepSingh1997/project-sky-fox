@@ -1,7 +1,6 @@
 fileignoreconfig:
-- filename: buildspec.yml
-  checksum: 718b33cc7f6135e70c95805b079f9122e04321f598ca576f20186a1bad274e36
-- filename: scripts/test_deployment.sh
-  checksum: d27bec4ba2b457de4045a468a7594c9f8c209a799e684f9d2afb1072303666ee
-- filename: README.md
-  checksum: 381d90c012725316736c92fdc91c51aedd72ed81ea02fdae49d0a67d0fa581fd
+- filename: src/main/java/com/booking/users/ChangePasswordRequest.java
+  checksum: 3acd6dd9c84ab61b572af67e20d20802d8e066a58deddd77a2dfd695b4802282
+- filename: src/test/java/com/booking/users/UserPrincipalServiceTest.java
+  checksum: b8c1ca41ccef3bc1d38f24608a5c27726bc88438e1d315f6e260d090cb709cc3
+version: ""
