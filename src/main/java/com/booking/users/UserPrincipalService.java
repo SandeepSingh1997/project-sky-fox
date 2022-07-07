@@ -26,6 +26,9 @@ public class UserPrincipalService implements UserDetailsService {
         return userRepository.findByUsername(username).orElseThrow(() -> new UsernameNotFoundException("User not found"));
     }
 
-    public void changePassword() {
+    public void changePassword(String username, ChangePasswordRequest changePasswordRequest) {
+        User user = findUserByUsername(username);
+        user.setPassword(changePasswordRequest.getNewPassword());
+        userRepository.save(user);
     }
 }

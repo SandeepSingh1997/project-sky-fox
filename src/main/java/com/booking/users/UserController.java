@@ -30,6 +30,6 @@ public class UserController {
 
     public void changePassword(Principal principal, ChangePasswordRequest changePasswordRequest) {
 
-        userPrincipalService.changePassword();
+        userPrincipalService.changePassword(principal.getName(), changePasswordRequest);
     }
 }

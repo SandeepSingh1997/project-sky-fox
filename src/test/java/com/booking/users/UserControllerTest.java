@@ -26,6 +26,6 @@ class UserControllerTest {
 
         userController.changePassword(principal, changePasswordRequest);
 
-        verify(userPrincipalService, times(1)).changePassword();
+        verify(userPrincipalService, times(1)).changePassword(principal.getName(), changePasswordRequest);
     }
 }
