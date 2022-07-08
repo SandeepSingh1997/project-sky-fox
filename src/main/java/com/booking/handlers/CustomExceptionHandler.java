@@ -1,6 +1,7 @@
 package com.booking.handlers;
 
 import com.booking.exceptions.EnumValidationException;
+import com.booking.exceptions.PasswordMismatchException;
 import com.booking.handlers.models.ErrorResponse;
 import com.fasterxml.jackson.databind.exc.InvalidDefinitionException;
 import org.jetbrains.annotations.NotNull;
@@ -57,6 +58,12 @@ public class CustomExceptionHandler extends ResponseEntityExceptionHandler {
             add(e.getMessage());
         }});
         return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(PasswordMismatchException.class)
+    public ResponseEntity<ErrorResponse> handlePasswordMismatchException(PasswordMismatchException ex) {
+        ErrorResponse error = new ErrorResponse("Password Mismatch", singletonList(ex.getMessage()));
+        return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler(Exception.class)

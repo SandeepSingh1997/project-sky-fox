@@ -30,7 +30,7 @@ public class UserPrincipalService implements UserDetailsService {
     public void changePassword(String username, ChangePasswordRequest changePasswordRequest) throws PasswordMismatchException {
         User user = findUserByUsername(username);
         if (!user.getPassword().equals(changePasswordRequest.getCurrentPassword()))
-            throw new PasswordMismatchException();
+            throw new PasswordMismatchException("Entered current password is not matching with existing password");
         user.setPassword(changePasswordRequest.getNewPassword());
         userRepository.save(user);
     }

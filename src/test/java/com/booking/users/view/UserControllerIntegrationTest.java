@@ -85,6 +85,21 @@ class UserControllerIntegrationTest {
                         .with(httpBasic("test-user", "Password@12"))
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(changePasswordRequestBodyJson))
-                    .andExpect(status().isBadRequest());
+                .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    void shouldNotBeAbleToUpdateThePasswordWhenProvidedPasswordMisMatchExistingPassword() throws Exception {
+        userRepository.save(new User("test-user", "Password@12"));
+        ChangePasswordRequest changePasswordRequest = new ChangePasswordRequest("WrongPass@12", "NewPass@12");
+        String changePasswordRequestBodyJson = objectMapper.writeValueAsString(changePasswordRequest);
+
+        mockMvc.perform(put("/password")
+                        .with(httpBasic("test-user", "Password@12"))
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(changePasswordRequestBodyJson))
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.message").value("Password Mismatch"))
+                .andExpect(jsonPath("$.details[0]").value("Entered current password is not matching with existing password"));
     }
 }
