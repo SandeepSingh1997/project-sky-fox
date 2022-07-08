@@ -21,14 +21,18 @@ public class MovieServiceResponse {
     @JsonProperty("Plot")
     private String plot;
 
+    @JsonProperty("Poster")
+    private String posterURL;
+
     public MovieServiceResponse() {
     }
 
-    public MovieServiceResponse(String imdbId, String title, String runtime, String plot) {
+    public MovieServiceResponse(String imdbId, String title, String runtime, String plot, String posterURL) {
         this.imdbId = imdbId;
         this.title = title;
         this.runtime = runtime;
         this.plot = plot;
+        this.posterURL = posterURL;
     }
 
     public Movie toMovie() throws FormatException {
@@ -41,6 +45,6 @@ public class MovieServiceResponse {
             throw new FormatException("runtime");
         }
 
-        return new Movie(imdbId, title, Duration.ofMinutes(minutes), plot);
+        return new Movie(imdbId, title, Duration.ofMinutes(minutes), plot, posterURL);
     }
 }

@@ -29,11 +29,16 @@ public class Movie {
     @ApiModelProperty(name = "description", value = "Description of the movie", required = true, example = "Movie Description", position = 4)
     private final String plot;
 
-    public Movie(String id, String name, Duration duration, String plot) {
+    @JsonProperty
+    @ApiModelProperty(name = "poster", value = "Movie Poster URL", required = true, example = "https://image.png", position = 5)
+    private final String posterURL;
+
+    public Movie(String id, String name, Duration duration, String plot, String posterURL) {
         this.id = id;
         this.name = name;
         this.duration = duration;
         this.plot = plot;
+        this.posterURL = posterURL;
     }
 
     @Override
@@ -44,11 +49,12 @@ public class Movie {
         return id.equals(movie.id) &&
                 name.equals(movie.name) &&
                 duration.equals(movie.duration) &&
+                posterURL.equals(movie.posterURL) &&
                 plot.equals(movie.plot);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, duration, plot);
+        return Objects.hash(id, name, duration, plot, posterURL);
     }
 }

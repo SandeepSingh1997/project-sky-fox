@@ -16,18 +16,18 @@ class MovieServiceResponseTest {
 
     @Test
     public void should_convert_to_a_movie_with_valid_runtime() throws FormatException {
-        final var movieServiceResponse = new MovieServiceResponse("id", "title", "50 min", "plot");
+        final var movieServiceResponse = new MovieServiceResponse("id", "title", "50 min", "plot", "posterURL");
 
         final var actualMovie = movieServiceResponse.toMovie();
 
-        final var expectedMovie = new Movie("id", "title", Duration.ofMinutes(50), "plot");
+        final var expectedMovie = new Movie("id", "title", Duration.ofMinutes(50), "plot", "posterURL");
         assertThat(actualMovie, is(equalTo(expectedMovie)));
     }
 
     @ParameterizedTest
     @ValueSource(strings = {"invalid", "NaN min"})
     public void should_not_convert_to_a_movie_with_invalid_runtime(String runtime) {
-        final var movieServiceResponse = new MovieServiceResponse("id", "title", runtime, "plot");
+        final var movieServiceResponse = new MovieServiceResponse("id", "title", runtime, "plot", "posterURL");
 
         final var formatException = assertThrows(FormatException.class, movieServiceResponse::toMovie);
         assertThat(formatException.getMessage(), is(equalTo("runtime has an illegal format")));
