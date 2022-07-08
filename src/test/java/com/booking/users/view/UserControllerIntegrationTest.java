@@ -50,9 +50,9 @@ class UserControllerIntegrationTest {
 
     @Test
     public void shouldLoginSuccessfully() throws Exception {
-        userRepository.save(new User("test-user", "password"));
+        userRepository.save(new User("test-user", "Password@12"));
         mockMvc.perform(get("/login")
-                        .with(httpBasic("test-user", "password")))
+                        .with(httpBasic("test-user", "Password@12")))
                 .andExpect(status().isOk());
     }
 
@@ -64,16 +64,15 @@ class UserControllerIntegrationTest {
 
     @Test
     void shouldBeAbleToUpdateThePasswordSuccessfully() throws Exception {
-        userRepository.save(new User("test-user", "initial-password"));
-        ChangePasswordRequest changePasswordRequest = new ChangePasswordRequest("initial-password", "new-password");
+        userRepository.save(new User("test-user", "Password@12"));
+        ChangePasswordRequest changePasswordRequest = new ChangePasswordRequest("Password@12", "New@password12");
         String changePasswordRequestBodyJson = objectMapper.writeValueAsString(changePasswordRequest);
 
         mockMvc.perform(put("/password")
-                        .with(httpBasic("test-user", "initial-password"))
+                        .with(httpBasic("test-user", "Password@12"))
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(changePasswordRequestBodyJson))
-                .andExpect(status().isOk())
-                .andDo(print());
+                .andExpect(status().isOk());
     }
 
     @Test
@@ -86,7 +85,6 @@ class UserControllerIntegrationTest {
                         .with(httpBasic("test-user", "Password@12"))
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(changePasswordRequestBodyJson))
-                    .andExpect(status().isBadRequest())
-                .andDo(print());
+                    .andExpect(status().isBadRequest());
     }
 }
