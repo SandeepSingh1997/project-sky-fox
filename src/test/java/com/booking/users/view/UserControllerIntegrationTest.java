@@ -75,4 +75,18 @@ class UserControllerIntegrationTest {
                 .andExpect(status().isOk())
                 .andDo(print());
     }
+
+    @Test
+    void shouldNotBeAbleToUpdateThePasswordWhenValidationFails() throws Exception {
+        userRepository.save(new User("test-user", "Password@12"));
+        ChangePasswordRequest changePasswordRequest = new ChangePasswordRequest("Password@12", "New");
+        String changePasswordRequestBodyJson = objectMapper.writeValueAsString(changePasswordRequest);
+
+        mockMvc.perform(put("/password")
+                        .with(httpBasic("test-user", "Password@12"))
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(changePasswordRequestBodyJson))
+                    .andExpect(status().isBadRequest())
+                .andDo(print());
+    }
 }

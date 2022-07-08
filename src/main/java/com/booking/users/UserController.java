@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.validation.Valid;
 import java.security.Principal;
 import java.util.HashMap;
 import java.util.Map;
@@ -34,7 +35,7 @@ public class UserController {
     }
 
     @PutMapping("/password")
-    public ResponseEntity<Object> changePassword(Principal principal, @RequestBody ChangePasswordRequest changePasswordRequest) throws PasswordMismatchException {
+    public ResponseEntity<Object> changePassword(Principal principal,@Valid @RequestBody ChangePasswordRequest changePasswordRequest) throws PasswordMismatchException {
         userPrincipalService.changePassword(principal.getName(), changePasswordRequest);
         return new ResponseEntity<>(HttpStatus.OK);
     }
