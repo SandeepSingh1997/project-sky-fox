@@ -1,4 +1,4 @@
-package com.booking.customers.repository;
+package com.booking.movieAudience.repository;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -11,7 +11,7 @@ import java.util.Objects;
 
 @Entity
 @Table(name = "customer")
-public class Customer {
+public class MovieAudience {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -32,12 +32,12 @@ public class Customer {
     @ApiModelProperty(name = "phone number", value = "Phone number of the customer", required = true, example = "9933221100", position = 3)
     private String phoneNumber;
 
-    public Customer(String name, String phoneNumber) {
+    public MovieAudience(String name, String phoneNumber) {
         this.name = name;
         this.phoneNumber = phoneNumber;
     }
 
-    public Customer() {
+    public MovieAudience() {
 
     }
 
@@ -49,7 +49,7 @@ public class Customer {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Customer customer = (Customer) o;
+        MovieAudience customer = (MovieAudience) o;
         return Objects.equals(id, customer.id) &&
                 Objects.equals(name, customer.name) &&
                 Objects.equals(phoneNumber, customer.phoneNumber);

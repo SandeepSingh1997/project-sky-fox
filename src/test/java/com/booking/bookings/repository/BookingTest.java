@@ -1,7 +1,7 @@
 package com.booking.bookings.repository;
 
 import com.booking.bookings.view.BookingConfirmationResponse;
-import com.booking.customers.repository.Customer;
+import com.booking.movieAudience.repository.MovieAudience;
 import com.booking.shows.respository.Show;
 import com.booking.slots.repository.Slot;
 import org.junit.jupiter.api.BeforeEach;
@@ -27,7 +27,7 @@ public class BookingTest {
 
     private Date date;
     private Show show;
-    private Customer customer;
+    private MovieAudience movieAudience;
     private Validator validator;
     private Slot slot;
 
@@ -37,12 +37,12 @@ public class BookingTest {
         slot = new Slot("Slot name", Time.valueOf("13:00:00"), Time.valueOf("15:00:00"));
         date = Date.valueOf("2020-06-01");
         show = new Show(date, slot, BigDecimal.valueOf(245.99), "movie-1");
-        customer = new Customer("customer", "9081238761");
+        movieAudience = new MovieAudience("customer", "9081238761");
     }
 
     @Test
     public void should_return_no_violation() {
-        final Booking booking = new Booking(date, show, customer, 2, BigDecimal.valueOf(244.99));
+        final Booking booking = new Booking(date, show, movieAudience, 2, BigDecimal.valueOf(244.99));
 
         final Set<ConstraintViolation<Booking>> violations = validator.validate(booking);
 
@@ -52,13 +52,13 @@ public class BookingTest {
     @Test
     public void should_return_only_fields_reqiured_for_booking_confirmation() {
         BigDecimal amountPaid = BigDecimal.valueOf(244.99);
-        final Booking booking = new Booking(date, show, customer, 2, amountPaid);
+        final Booking booking = new Booking(date, show, movieAudience, 2, amountPaid);
 
         BookingConfirmationResponse bookingConfirmationResponse = booking.constructBookingConfirmation();
 
         BookingConfirmationResponse expectedBookingConfirmationResponse = new BookingConfirmationResponse(
                 null,
-                customer.getName(),
+                movieAudience.getName(),
                 date,
                 slot.getStartTime(),
                 amountPaid,
@@ -86,7 +86,7 @@ public class BookingTest {
 
     @Test
     public void should_not_allow_no_of_seats_less_than_0() {
-        final Booking booking = new Booking(date, show, customer, -1, BigDecimal.valueOf(299));
+        final Booking booking = new Booking(date, show, movieAudience, -1, BigDecimal.valueOf(299));
 
         final Set<ConstraintViolation<Booking>> violations = validator.validate(booking);
 
@@ -95,7 +95,7 @@ public class BookingTest {
 
     @Test
     public void should_not_allow_amount_paid_less_than_0() {
-        final Booking booking = new Booking(date, show, customer, 1, BigDecimal.valueOf(-1));
+        final Booking booking = new Booking(date, show, movieAudience, 1, BigDecimal.valueOf(-1));
 
         final Set<ConstraintViolation<Booking>> violations = validator.validate(booking);
 

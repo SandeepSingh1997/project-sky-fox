@@ -3,8 +3,8 @@ package com.booking.revenue.view;
 import com.booking.App;
 import com.booking.bookings.repository.Booking;
 import com.booking.bookings.repository.BookingRepository;
-import com.booking.customers.repository.Customer;
-import com.booking.customers.repository.CustomerRepository;
+import com.booking.movieAudience.repository.MovieAudience;
+import com.booking.movieAudience.repository.MovieAudienceRepository;
 import com.booking.shows.respository.Show;
 import com.booking.shows.respository.ShowRepository;
 import com.booking.slots.repository.Slot;
@@ -47,14 +47,14 @@ public class RevenueControllerIntegrationTest {
     private BookingRepository bookingRepository;
 
     @Autowired
-    private CustomerRepository customerRepository;
+    private MovieAudienceRepository movieAudienceRepository;
 
     @BeforeEach
     public void before() {
         bookingRepository.deleteAll();
         showRepository.deleteAll();
         slotRepository.deleteAll();
-        customerRepository.deleteAll();
+        movieAudienceRepository.deleteAll();
     }
 
     @AfterEach
@@ -62,7 +62,7 @@ public class RevenueControllerIntegrationTest {
         bookingRepository.deleteAll();
         showRepository.deleteAll();
         slotRepository.deleteAll();
-        customerRepository.deleteAll();
+        movieAudienceRepository.deleteAll();
     }
 
     @Test
@@ -78,16 +78,16 @@ public class RevenueControllerIntegrationTest {
                 showRepository.save(new Show(Date.valueOf("2020-01-01"), slotTwo, BigDecimal.valueOf(150), "movie_1"));
         final Show showThree =
                 showRepository.save(new Show(Date.valueOf("2020-01-02"), slotTwo, BigDecimal.valueOf(250), "movie_1"));
-        final var customer = customerRepository.save(new Customer("Name", "9999999999"));
+        final var movieAudience = movieAudienceRepository.save(new MovieAudience("Name", "9999999999"));
 
         bookingRepository.save(
-                new Booking(Date.valueOf("2019-12-31"), showOne, customer, 2, BigDecimal.valueOf(400))
+                new Booking(Date.valueOf("2019-12-31"), showOne, movieAudience, 2, BigDecimal.valueOf(400))
         );
         bookingRepository.save(
-                new Booking(Date.valueOf("2019-12-31"), showTwo, customer, 3, BigDecimal.valueOf(450))
+                new Booking(Date.valueOf("2019-12-31"), showTwo, movieAudience, 3, BigDecimal.valueOf(450))
         );
         bookingRepository.save(
-                new Booking(Date.valueOf("2019-12-31"), showThree, customer, 1, BigDecimal.valueOf(250))
+                new Booking(Date.valueOf("2019-12-31"), showThree, movieAudience, 1, BigDecimal.valueOf(250))
         );
 
         mockMvc.perform(get("/revenue?date=2020-01-01"))
@@ -106,10 +106,10 @@ public class RevenueControllerIntegrationTest {
         showRepository.save(new Show(Date.valueOf("2020-01-01"), slotTwo, BigDecimal.valueOf(150), "movie_1"));
         final Show showThree =
                 showRepository.save(new Show(Date.valueOf("2020-01-02"), slotTwo, BigDecimal.valueOf(250), "movie_1"));
-        final var customer = customerRepository.save(new Customer("Name", "9999999999"));
+        final var movieAudience = movieAudienceRepository.save(new MovieAudience("Name", "9999999999"));
 
         bookingRepository.save(
-                new Booking(Date.valueOf("2019-12-31"), showThree, customer, 1, BigDecimal.valueOf(250))
+                new Booking(Date.valueOf("2019-12-31"), showThree, movieAudience, 1, BigDecimal.valueOf(250))
         );
 
         mockMvc.perform(get("/revenue?date=2020-01-01"))

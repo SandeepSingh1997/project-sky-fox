@@ -2,7 +2,7 @@ package com.booking.bookings.view;
 
 import com.booking.App;
 import com.booking.bookings.repository.BookingRepository;
-import com.booking.customers.repository.CustomerRepository;
+import com.booking.movieAudience.repository.MovieAudienceRepository;
 import com.booking.movieGateway.MovieGateway;
 import com.booking.movieGateway.exceptions.FormatException;
 import com.booking.movieGateway.models.Movie;
@@ -56,7 +56,7 @@ public class BookingControllerIntegrationTest {
     private SlotRepository slotRepository;
 
     @Autowired
-    private CustomerRepository customerRepository;
+    private MovieAudienceRepository movieAudienceRepository;
 
     @MockBean
     private MovieGateway movieGateway;
@@ -67,7 +67,7 @@ public class BookingControllerIntegrationTest {
         bookingRepository.deleteAll();
         showRepository.deleteAll();
         slotRepository.deleteAll();
-        customerRepository.deleteAll();
+        movieAudienceRepository.deleteAll();
 
         when(movieGateway.getMovieFromId("movie_1"))
                 .thenReturn(
@@ -89,7 +89,7 @@ public class BookingControllerIntegrationTest {
         bookingRepository.deleteAll();
         showRepository.deleteAll();
         slotRepository.deleteAll();
-        customerRepository.deleteAll();
+        movieAudienceRepository.deleteAll();
     }
 
     @Test
@@ -97,7 +97,7 @@ public class BookingControllerIntegrationTest {
         final String requestJson = "{" +
                 "\"date\": \"2020-06-01\"," +
                 "\"showId\": " + showOne.getId() + "," +
-                "\"customer\": " + "{\"name\": \"Customer 1\", \"phoneNumber\": \"9922334455\"}," +
+                "\"movieAudience\": " + "{\"name\": \"MovieAudience 1\", \"phoneNumber\": \"9922334455\"}," +
                 "\"noOfSeats\": 2" +
                 "}";
 
@@ -108,13 +108,13 @@ public class BookingControllerIntegrationTest {
                 .andExpect(status().isCreated())
                 .andExpect(jsonPath("$.id").exists())
                 .andExpect(content().json("{" +
-                        "\"customerName\":\"Customer 1\"," +
+                        "\"customerName\":\"MovieAudience 1\"," +
                         "\"showDate\":\"2020-01-01\"," +
                         "\"startTime\":\"09:30:00\"," +
                         "\"amountPaid\":499.98," +
                         "\"noOfSeats\":2}"));
 
-        assertThat(customerRepository.findAll().size(), is(1));
+        assertThat(movieAudienceRepository.findAll().size(), is(1));
         assertThat(bookingRepository.findAll().size(), is(1));
     }
 
@@ -123,7 +123,7 @@ public class BookingControllerIntegrationTest {
         final String moreThanAllowedSeatsRequestJson = "{" +
                 "\"date\": \"2020-06-01\"," +
                 "\"showId\": " + showOne.getId() + "," +
-                "\"customer\": " + "{\"name\": \"Customer 1\", \"phoneNumber\": \"9922334455\"}," +
+                "\"movieAudience\": " + "{\"name\": \"MovieAudience 1\", \"phoneNumber\": \"9922334455\"}," +
                 "\"noOfSeats\": " + (Integer.parseInt(MAX_NO_OF_SEATS_PER_BOOKING) + 1) +
                 "}";
 
@@ -142,7 +142,7 @@ public class BookingControllerIntegrationTest {
         final String overCapacityRequest = "{" +
                 "\"date\": \"2020-06-01\"," +
                 "\"showId\": " + showOne.getId() + "," +
-                "\"customer\": " + "{\"name\": \"Customer 1\", \"phoneNumber\": \"9922334455\"}," +
+                "\"movieAudience\": " + "{\"name\": \"MovieAudience 1\", \"phoneNumber\": \"9922334455\"}," +
                 "\"noOfSeats\": 11" +
                 "}";
 
@@ -158,7 +158,7 @@ public class BookingControllerIntegrationTest {
         final String successRequest = "{" +
                 "\"date\": \"2020-06-01\"," +
                 "\"showId\": " + showOne.getId() + "," +
-                "\"customer\": " + "{\"name\": \"Customer 1\", \"phoneNumber\": \"9922334455\"}," +
+                "\"movieAudience\": " + "{\"name\": \"MovieAudience 1\", \"phoneNumber\": \"9922334455\"}," +
                 "\"noOfSeats\": " + MAX_NO_OF_SEATS_PER_BOOKING +
                 "}";
 

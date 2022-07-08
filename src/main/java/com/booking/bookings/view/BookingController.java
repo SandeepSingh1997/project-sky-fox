@@ -36,7 +36,7 @@ public class BookingController {
             @ApiResponse(code = 500, message = "Something failed in the server", response = ErrorResponse.class)
     })
     public BookingConfirmationResponse book(@Valid @RequestBody BookingRequest bookingRequest) throws NoSeatAvailableException {
-        Booking booking = bookingService.book(bookingRequest.getCustomer(), bookingRequest.getShowId(), bookingRequest.getDate(), bookingRequest.getNoOfSeats());
+        Booking booking = bookingService.book(bookingRequest.getMovieAudience(), bookingRequest.getShowId(), bookingRequest.getDate(), bookingRequest.getNoOfSeats());
         return booking.constructBookingConfirmation();
     }
 }

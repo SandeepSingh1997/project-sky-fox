@@ -1,7 +1,7 @@
 package com.booking.bookings.repository;
 
 import com.booking.bookings.view.BookingConfirmationResponse;
-import com.booking.customers.repository.Customer;
+import com.booking.movieAudience.repository.MovieAudience;
 import com.booking.shows.respository.Show;
 import com.booking.utilities.serializers.date.DateSerializer;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -42,7 +42,7 @@ public class Booking {
     @JoinColumn(name = "customer_id")
     @JsonIgnore
     @NotNull(message = "Customer must be provided")
-    private Customer customer;
+    private MovieAudience movieAudience;
 
     @Column(name = "no_of_seats", nullable = false)
     @JsonProperty
@@ -58,10 +58,10 @@ public class Booking {
     @ApiModelProperty(name = "amount paid", value = "Amount paid for seats", required = true, example = "300.44", position = 4)
     private BigDecimal amountPaid;
 
-    public Booking(Date date, Show show, Customer customer, Integer noOfSeats, BigDecimal amountPaid) {
+    public Booking(Date date, Show show, MovieAudience movieAudience, Integer noOfSeats, BigDecimal amountPaid) {
         this.date = date;
         this.show = show;
-        this.customer = customer;
+        this.movieAudience = movieAudience;
         this.noOfSeats = noOfSeats;
         this.amountPaid = amountPaid;
     }
@@ -72,7 +72,7 @@ public class Booking {
     public BookingConfirmationResponse constructBookingConfirmation() {
         return new BookingConfirmationResponse(
                 id,
-                customer.getName(),
+                movieAudience.getName(),
                 show.getDate(),
                 show.getSlot().getStartTime(),
                 amountPaid,
@@ -84,8 +84,8 @@ public class Booking {
         return id;
     }
 
-    public Customer getCustomer() {
-        return customer;
+    public MovieAudience getMovieAudience() {
+        return movieAudience;
     }
 
     public Show getShow() {
@@ -112,13 +112,13 @@ public class Booking {
         return Objects.equals(id, booking.id) &&
                 Objects.equals(date, booking.date) &&
                 Objects.equals(show, booking.show) &&
-                Objects.equals(customer, booking.customer) &&
+                Objects.equals(movieAudience, booking.movieAudience) &&
                 Objects.equals(noOfSeats, booking.noOfSeats) &&
                 Objects.equals(amountPaid, booking.amountPaid);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, date, show, customer, noOfSeats, amountPaid);
+        return Objects.hash(id, date, show, movieAudience, noOfSeats, amountPaid);
     }
 }
