@@ -22,11 +22,20 @@ public class ChangePasswordRequestTest {
     }
 
     @Test
+    void shouldAllowToChangePasswordWhenPasswordIsValid() {
+        ChangePasswordRequest changePasswordRequest = new ChangePasswordRequest("Old@password123", "New@password123");
+
+        Set<ConstraintViolation<ChangePasswordRequest>> violations = validator.validate(changePasswordRequest);
+
+        assertThat(violations.isEmpty(), is(true));
+    }
+
+    @Test
     void shouldNotAllowToSetNewPasswordWithoutCapitalLetter() {
         ChangePasswordRequest changePasswordRequest = new ChangePasswordRequest("Old@password", "new@password");
 
         Set<ConstraintViolation<ChangePasswordRequest>> violations = validator.validate(changePasswordRequest);
 
-        assertThat(violations.iterator().next().getMessage(), is("Password must contain atleast one Capital Letter"));
+        assertThat(violations.iterator().next().getMessage(), is("Password must contain atleast one Capital Letter, one Special character, one Digit, Minimum of 8 and Maximum of 16 characters"));
     }
 }

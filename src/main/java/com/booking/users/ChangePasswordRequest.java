@@ -10,7 +10,7 @@ public class ChangePasswordRequest {
     private String currentPassword;
 
     @JsonProperty
-    @Pattern(regexp = "(^$|[A-Za-z])", message = "Password must contain atleast one Capital Letter")
+    @Pattern(regexp = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\\S+$).{8,16}$", message = "Password must contain atleast one Capital Letter, one Special character, one Digit, Minimum of 8 and Maximum of 16 characters")
     private String newPassword;
 
     public ChangePasswordRequest() {
