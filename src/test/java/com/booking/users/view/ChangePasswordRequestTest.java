@@ -75,4 +75,12 @@ public class ChangePasswordRequestTest {
         assertThat(violations.iterator().next().getMessage(), is("Password must contain atleast one Capital Letter, one Special character, one Digit, Minimum of 8 and Maximum of 16 characters"));
     }
 
+    @Test
+    void shouldPassAllValidationsForCurrentPasswordOfChangePasswordRequestBody() {
+        ChangePasswordRequest changePasswordRequest = new ChangePasswordRequest("passwordpasswordd", "Password@123");
+
+        Set<ConstraintViolation<ChangePasswordRequest>> violations = validator.validate(changePasswordRequest);
+
+        assertThat(violations.iterator().next().getMessage(), is("Password must contain atleast one Capital Letter, one Special character, one Digit, Minimum of 8 and Maximum of 16 characters"));
+    }
 }
