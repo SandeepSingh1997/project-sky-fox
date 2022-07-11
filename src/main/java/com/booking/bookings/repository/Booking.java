@@ -39,7 +39,7 @@ public class Booking {
     private Show show;
 
     @OneToOne
-    @JoinColumn(name = "customer_id")
+    @JoinColumn(name = "movie_audience_id")
     @JsonIgnore
     @NotNull(message = "Customer must be provided")
     private MovieAudience movieAudience;

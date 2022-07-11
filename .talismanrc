@@ -1,11 +1,6 @@
 fileignoreconfig:
-- filename: src/main/java/com/booking/users/ChangePasswordRequest.java
-  checksum: 3acd6dd9c84ab61b572af67e20d20802d8e066a58deddd77a2dfd695b4802282
-- filename: src/test/java/com/booking/users/UserPrincipalServiceTest.java
-  checksum: b8c1ca41ccef3bc1d38f24608a5c27726bc88438e1d315f6e260d090cb709cc3
-- filename: src/test/java/com/booking/users/view/ChangePasswordRequestTest.java
-  checksum: 76a3e64e6611c92d5c345c281ba082a3ccdf14aca16e0eb8ffe1eea58c110aa9
-- filename: src/test/java/com/booking/users/view/UserControllerIntegrationTest.java
-  checksum: 3a0395f6dd3b271ce29a79bd5b5ddee306c2ed9ff9fb61efba9f2be31a95264e
-
+- filename: src/main/resources/db/migration/V1.10__RenameTableCustomerToMovieAudience.sql
+  checksum: fc0188851fbd1891ad0a3bd0ec7cc99964094fb52b08050a090a1c6c0ff78145
+- filename: src/main/resources/db/migration/V1.11__RenameColumnCustomer_IdInBookingTableToMovieAudience_Id.sql
+  checksum: eb3636da90245136d06b145675edd6ffe20edd6ea3d83382f88fb9db3003bc34
 version: ""

@@ -21,7 +21,7 @@ public class BookingRequest {
     private Long showId;
 
     @JsonProperty
-    @ApiModelProperty(name = "customer", value = "Customer requesting booking", required = true, position = 3)
+    @ApiModelProperty(name = "movieAudience", value = "Customer requesting booking", required = true, position = 3)
     private MovieAudience movieAudience;
 
     @JsonProperty

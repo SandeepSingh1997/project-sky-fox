@@ -10,7 +10,7 @@ import javax.validation.constraints.Pattern;
 import java.util.Objects;
 
 @Entity
-@Table(name = "customer")
+@Table(name = "movieaudience")
 public class MovieAudience {
 
     @Id
