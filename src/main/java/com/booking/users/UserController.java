@@ -1,6 +1,5 @@
 package com.booking.users;
 
-import com.booking.exceptions.PasswordMismatchException;
 import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -35,7 +34,7 @@ public class UserController {
     }
 
     @PutMapping("/password")
-    public ResponseEntity<Object> changePassword(Principal principal,@Valid @RequestBody ChangePasswordRequest changePasswordRequest) throws PasswordMismatchException {
+    public ResponseEntity<Object> changePassword(Principal principal, @Valid @RequestBody ChangePasswordRequest changePasswordRequest) throws Exception {
         userPrincipalService.changePassword(principal.getName(), changePasswordRequest);
         return new ResponseEntity<>(HttpStatus.OK);
     }

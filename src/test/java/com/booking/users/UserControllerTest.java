@@ -1,6 +1,5 @@
 package com.booking.users;
 
-import com.booking.exceptions.PasswordMismatchException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -19,7 +18,7 @@ class UserControllerTest {
     }
 
     @Test
-    void shouldAbleToUpdatePasswordSuccessfully() throws PasswordMismatchException {
+    void shouldAbleToUpdatePasswordSuccessfully() throws Exception {
 
         UserController userController = new UserController(userPrincipalService);
         ChangePasswordRequest changePasswordRequest = new ChangePasswordRequest("old@Password1", "new@Password1");
