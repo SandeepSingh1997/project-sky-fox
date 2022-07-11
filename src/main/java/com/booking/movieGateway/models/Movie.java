@@ -22,7 +22,7 @@ public class Movie {
 
     @JsonProperty
     @JsonSerialize(using = DurationSerializer.class)
-    @ApiModelProperty(name = "name", dataType = "java.lang.String", value = "Duration of the movie", required = true, example = "1h 30m", position = 3)
+    @ApiModelProperty(name = "duration", dataType = "java.lang.String", value = "Duration of the movie", required = true, example = "1h 30m", position = 3)
     private final Duration duration;
 
     @JsonProperty
@@ -33,12 +33,17 @@ public class Movie {
     @ApiModelProperty(name = "poster", value = "Movie Poster URL", required = true, example = "https://image.png", position = 5)
     private final String posterURL;
 
-    public Movie(String id, String name, Duration duration, String plot, String posterURL) {
+    @JsonProperty
+    @ApiModelProperty(name = "imdbRating", value = "Rating of the movie", required = true, example = "8.5", position = 6)
+    private final String imdbRating;
+
+    public Movie(String id, String name, Duration duration, String plot, String posterURL, String imdbRating) {
         this.id = id;
         this.name = name;
         this.duration = duration;
         this.plot = plot;
         this.posterURL = posterURL;
+        this.imdbRating = imdbRating;
     }
 
     @Override
@@ -50,11 +55,12 @@ public class Movie {
                 name.equals(movie.name) &&
                 duration.equals(movie.duration) &&
                 posterURL.equals(movie.posterURL) &&
-                plot.equals(movie.plot);
+                plot.equals(movie.plot) &&
+                imdbRating.equals(movie.imdbRating);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, duration, plot, posterURL);
+        return Objects.hash(id, name, duration, plot, posterURL, imdbRating);
     }
 }

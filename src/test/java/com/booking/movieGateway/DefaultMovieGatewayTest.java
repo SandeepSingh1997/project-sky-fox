@@ -27,7 +27,8 @@ class DefaultMovieGatewayTest {
             "\"Title\":\"title\"," +
             "\"Runtime\":\"120 min\"," +
             "\"Plot\":\"plot\"," +
-            "\"Poster\":\"posterURL\"}";
+            "\"Poster\":\"posterURL\"," +
+            "\"imdbRating\":\"8.0\"}";
 
     private MockWebServer mockWebServer;
 
@@ -48,7 +49,7 @@ class DefaultMovieGatewayTest {
 
         final var actualMovie = defaultMovieGateway.getMovieFromId("id");
 
-        final var expectedMovie = new Movie("id", "title", Duration.ofMinutes(120), "plot", "posterURL");
+        final var expectedMovie = new Movie("id", "title", Duration.ofMinutes(120), "plot", "posterURL", "8.0");
         assertThat(actualMovie, is(equalTo(expectedMovie)));
     }
 

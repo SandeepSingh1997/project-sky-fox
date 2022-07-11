@@ -9,7 +9,7 @@ javac -version
 ```
 
 ## Install colima to run containers
-- Set up lima for docker
+- Set up colima for docker
     - `brew install colima`
     - start colima by executing `colima start`
     - In the terminal type `docker ps` and you shouldn't see any error and possibly line indicating headers like "CONTAINER ID, IMAGE etc"
