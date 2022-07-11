@@ -7,10 +7,14 @@ import org.junit.jupiter.api.Test;
 import javax.validation.ConstraintViolation;
 import javax.validation.Validation;
 import javax.validation.Validator;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class ChangePasswordRequestTest {
 
@@ -82,5 +86,31 @@ public class ChangePasswordRequestTest {
         Set<ConstraintViolation<ChangePasswordRequest>> violations = validator.validate(changePasswordRequest);
 
         assertThat(violations.iterator().next().getMessage(), is("Password must contain atleast one Capital Letter, one Special character, one Digit, Minimum of 8 and Maximum of 16 characters"));
+    }
+
+    @Test
+    public void shouldNotAllowNullFields() {
+        ChangePasswordRequest changePasswordRequest = new ChangePasswordRequest(null, null);
+
+        Set<ConstraintViolation<ChangePasswordRequest>> violations = validator.validate(changePasswordRequest);
+
+        List<String> messages = violations.stream().map(ConstraintViolation::getMessage).collect(Collectors.toList());
+
+        assertTrue(messages.containsAll(Arrays
+                .asList("Current password must be provided",
+                        "New password must be provided")));
+    }
+
+    @Test
+    public void shouldNotAllowBlankFields() {
+        ChangePasswordRequest changePasswordRequest = new ChangePasswordRequest("", "");
+
+        Set<ConstraintViolation<ChangePasswordRequest>> violations = validator.validate(changePasswordRequest);
+
+        List<String> messages = violations.stream().map(ConstraintViolation::getMessage).collect(Collectors.toList());
+
+        assertTrue(messages.containsAll(Arrays
+                .asList("Current password must not be empty value",
+                        "New password must not be empty value")));
     }
 }

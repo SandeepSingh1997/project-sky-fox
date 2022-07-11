@@ -4,7 +4,7 @@ fileignoreconfig:
 - filename: src/test/java/com/booking/users/UserPrincipalServiceTest.java
   checksum: b8c1ca41ccef3bc1d38f24608a5c27726bc88438e1d315f6e260d090cb709cc3
 - filename: src/test/java/com/booking/users/view/ChangePasswordRequestTest.java
-  checksum: 060da5d0d2738c9029d1f996e82c49ce1a386d5897e53c2cc8dc53d06c215233
+  checksum: 76a3e64e6611c92d5c345c281ba082a3ccdf14aca16e0eb8ffe1eea58c110aa9
 - filename: src/test/java/com/booking/users/view/UserControllerIntegrationTest.java
   checksum: 3a0395f6dd3b271ce29a79bd5b5ddee306c2ed9ff9fb61efba9f2be31a95264e
 
