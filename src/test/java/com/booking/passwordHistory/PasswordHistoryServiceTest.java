@@ -44,16 +44,14 @@ public class PasswordHistoryServiceTest {
     @Test
     void shouldBeAbleReturnRecentPasswords() {
         User user = new User("test-user", "Password@123");
-        List<PasswordHistory> passwords = new ArrayList<>();
-        Timestamp instant = Timestamp.from(Instant.now());
-        passwords.add(new PasswordHistory(new PasswordHistoryPK(user, "Password1"), instant));
-        instant = Timestamp.valueOf(instant.toLocalDateTime().plusDays(1));
-        passwords.add(new PasswordHistory(new PasswordHistoryPK(user, "Password2"), instant));
-        instant = Timestamp.valueOf(instant.toLocalDateTime().plusDays(1));
-        passwords.add(new PasswordHistory(new PasswordHistoryPK(user, "Password3"), instant));
+        List<String> passwords = new ArrayList<>();
+        passwords.add("Password@1");
+        passwords.add("Password@2");
+        passwords.add("Password@3");
+
         when(passwordHistoryRepository.findRecentPasswordsByUserIdWithLimit(user.getId(), THREE.getValue())).thenReturn(passwords);
 
-        List<PasswordHistory> recentPasswords = passwordHistoryService.findRecentPasswordsByUserId(user.getId(), THREE);
+        List<String> recentPasswords = passwordHistoryService.findRecentPasswordsByUserId(user.getId(), THREE);
 
         assertEquals(3, recentPasswords.size());
 

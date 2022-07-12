@@ -25,7 +25,7 @@ public class PasswordHistoryService {
         this.userRepository = userRepository;
     }
 
-    public List<PasswordHistory> findRecentPasswordsByUserId(Long userId, Constants three) {
+    public List<String> findRecentPasswordsByUserId(Long userId, Constants three) {
         return passwordHistoryRepository.findRecentPasswordsByUserIdWithLimit(userId, three.getValue());
     }
 

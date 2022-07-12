@@ -3,7 +3,6 @@ package com.booking.users;
 import com.booking.exceptions.PasswordMatchesWithLastThreePasswordsException;
 import com.booking.exceptions.PasswordMismatchException;
 import com.booking.passwordHistory.PasswordHistoryService;
-import com.booking.passwordHistory.repository.PasswordHistory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -41,9 +40,9 @@ public class UserPrincipalService implements UserDetailsService {
         if (!user.getPassword().equals(changePasswordRequest.getCurrentPassword()))
             throw new PasswordMismatchException("Entered current password is not matching with existing password");
 
-        List<PasswordHistory> lastThreePasswords = passwordHistoryService.findRecentPasswordsByUserId(user.getId(), THREE);
-        for (PasswordHistory password : lastThreePasswords) {
-            if (password.getPasswordHistoryPK().getPassword().equals(changePasswordRequest.getNewPassword()))
+        List<String> lastThreePasswords = passwordHistoryService.findRecentPasswordsByUserId(user.getId(), THREE);
+        for (String password : lastThreePasswords) {
+            if (password.equals(changePasswordRequest.getNewPassword()))
                 throw new PasswordMatchesWithLastThreePasswordsException("Entered new password matches with recent three passwords");
         }
 
