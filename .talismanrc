@@ -1,28 +1,4 @@
 fileignoreconfig:
-- filename: src/main/resources/db/migration/V1.10__RenameTableCustomerToMovieAudience.sql
-  checksum: fc0188851fbd1891ad0a3bd0ec7cc99964094fb52b08050a090a1c6c0ff78145
-- filename: src/main/resources/db/migration/V1.11__RenameColumnCustomer_IdInBookingTableToMovieAudience_Id.sql
-  checksum: eb3636da90245136d06b145675edd6ffe20edd6ea3d83382f88fb9db3003bc34
-- filename: src/main/resources/db/migration/V1.12__CreatePasswordHistoryTable.sql
-  checksum: 0c80e49a2ec5ccac022ff43af13851ffc9d43c380a7c9cd862a08ff4c908df2d
-- filename: src/main/java/com/booking/passwordHistory/repository/PasswordHistory.java
-  checksum: 8a4154cbae00819244f26b465c3c138799e242b514e2936fc1bb75bcc1160ef7
-- filename: src/test/java/com/booking/passwordHistory/repository/PasswordHistoryTest.java
-  checksum: df27b179ee90e14e0582a3624687f02fe6159793735bcf4cbfa00a233c22f92e
-- filename: src/main/java/com/booking/passwordHistory/repository/PasswordHistoryPK.java
-  checksum: 413cef40d8ba1a53cb59f3838280ab7ba225f8c6583f0548414d6cc2cccc595b
-- filename: src/main/java/com/booking/passwordHistory/repository/PasswordHistoryRepository.java
-  checksum: 71c280c38275dfd5cf5e6ceac576708f5c9fa0d81596e0a3aa70b019eaaaf7c4
-- filename: src/test/java/com/booking/passwordHistory/repository/PasswordHistoryRepositoryTest.java
-  checksum: be2b86e983e1361ac003c547368259b84a486dd34aea9d740e264aa85a75c095
-- filename: src/test/java/com/booking/passwordHistory/PasswordHistoryServiceTest.java
-  checksum: 818433cc78eb8e4d6e383b8a1c758d47e38d21f93c7c14b74e664e0d244c5782
-- filename: src/main/java/com/booking/passwordHistory/PasswordHistoryService.java
-  checksum: 741c9cbf02fc49522a25fda8fbaaea5f855bbd2a1c0430850795d3427cd9697b
-- filename: src/test/java/com/booking/users/UserPrincipalServiceTest.java
-  checksum: 3a63bf257fb784fb2d4f66aa0426ab5b78652bab0bcfbbbb961bf27f13ecf583
-- filename: src/main/java/com/booking/users/UserPrincipalService.java
-  checksum: 9cdaa9f296c86c250f5c51fb2a4422f13e77ddf4fdae8e7f38606c08b990d12d
-- filename: src/test/java/com/booking/users/view/UserControllerIntegrationTest.java
-  checksum: 8e2aa62c92309a739f87387a7cac36152bf20007f53c6003adfccd03c9748d2e
+- filename: src/main/resources/db/migration/V1.13__CreateCustomerTable.sql
+  checksum: 8e94b0dd3ab8fc88e4480e7cd6bd982638b79a6e5c0a27d7eae37822432beeb0
 version: ""
