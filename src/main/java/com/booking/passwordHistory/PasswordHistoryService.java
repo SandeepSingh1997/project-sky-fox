@@ -4,8 +4,8 @@ import com.booking.passwordHistory.repository.Constants;
 import com.booking.passwordHistory.repository.PasswordHistory;
 import com.booking.passwordHistory.repository.PasswordHistoryPK;
 import com.booking.passwordHistory.repository.PasswordHistoryRepository;
-import com.booking.users.User;
-import com.booking.users.UserRepository;
+import com.booking.users.repository.User;
+import com.booking.users.repository.UserRepository;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 

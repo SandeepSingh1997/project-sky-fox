@@ -1,5 +1,6 @@
-package com.booking.users;
+package com.booking.users.view;
 
+import com.booking.users.UserPrincipalService;
 import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

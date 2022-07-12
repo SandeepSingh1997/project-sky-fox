@@ -1,4 +1,4 @@
-package com.booking.users;
+package com.booking.users.view;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 

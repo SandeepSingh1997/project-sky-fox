@@ -3,6 +3,9 @@ package com.booking.users;
 import com.booking.exceptions.PasswordMatchesWithLastThreePasswordsException;
 import com.booking.exceptions.PasswordMismatchException;
 import com.booking.passwordHistory.PasswordHistoryService;
+import com.booking.users.repository.User;
+import com.booking.users.repository.UserRepository;
+import com.booking.users.view.ChangePasswordRequest;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

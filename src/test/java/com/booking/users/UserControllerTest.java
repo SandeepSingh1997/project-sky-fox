@@ -1,5 +1,7 @@
 package com.booking.users;
 
+import com.booking.users.view.ChangePasswordRequest;
+import com.booking.users.view.UserController;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
