@@ -20,9 +20,9 @@ fileignoreconfig:
 - filename: src/main/java/com/booking/passwordHistory/PasswordHistoryService.java
   checksum: 741c9cbf02fc49522a25fda8fbaaea5f855bbd2a1c0430850795d3427cd9697b
 - filename: src/test/java/com/booking/users/UserPrincipalServiceTest.java
-  checksum: 3a63bf257fb784fb2d4f66aa0426ab5b78652bab0bcfbbbb961bf27f13ecf583
+  checksum: a10b99d2dd767c55b15179f625ccfcb1c0e1a91806d7d9c4cacbae35ff4f3367
 - filename: src/main/java/com/booking/users/UserPrincipalService.java
-  checksum: 9cdaa9f296c86c250f5c51fb2a4422f13e77ddf4fdae8e7f38606c08b990d12d
+  checksum: 51fad4803e6a1230de6cde805e0e3978ab76f49414f79a06ae5d5039181a172d
 - filename: src/test/java/com/booking/users/view/UserControllerIntegrationTest.java
   checksum: 8e2aa62c92309a739f87387a7cac36152bf20007f53c6003adfccd03c9748d2e
 version: ""

@@ -2,8 +2,8 @@ package com.booking.users;
 
 import com.booking.exceptions.PasswordMatchesWithLastThreePasswordsException;
 import com.booking.exceptions.PasswordMismatchException;
+import com.booking.passwordHistory.PasswordHistoryService;
 import com.booking.passwordHistory.repository.PasswordHistory;
-import com.booking.passwordHistory.repository.PasswordHistoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -17,12 +17,12 @@ import static com.booking.passwordHistory.repository.Constants.THREE;
 @Service
 public class UserPrincipalService implements UserDetailsService {
     private final UserRepository userRepository;
-    private final PasswordHistoryRepository passwordHistoryRepository;
+    private final PasswordHistoryService passwordHistoryService;
 
     @Autowired
-    public UserPrincipalService(UserRepository userRepository, PasswordHistoryRepository passwordHistoryRepository) {
+    public UserPrincipalService(UserRepository userRepository, PasswordHistoryService passwordHistoryService) {
         this.userRepository = userRepository;
-        this.passwordHistoryRepository = passwordHistoryRepository;
+        this.passwordHistoryService = passwordHistoryService;
     }
 
     @Override
@@ -41,11 +41,13 @@ public class UserPrincipalService implements UserDetailsService {
         if (!user.getPassword().equals(changePasswordRequest.getCurrentPassword()))
             throw new PasswordMismatchException("Entered current password is not matching with existing password");
 
-        List<PasswordHistory> lastThreePasswords = passwordHistoryRepository.findRecentPasswordsByUserIdWithLimit(user.getId(), THREE.getValue());
+        List<PasswordHistory> lastThreePasswords = passwordHistoryService.findRecentPasswordsByUserId(user.getId(), THREE);
         for (PasswordHistory password : lastThreePasswords) {
             if (password.getPasswordHistoryPK().getPassword().equals(changePasswordRequest.getNewPassword()))
                 throw new PasswordMatchesWithLastThreePasswordsException("Entered new password matches with recent three passwords");
         }
+
+        passwordHistoryService.add(user.getId(), changePasswordRequest.getNewPassword());
 
         user.setPassword(changePasswordRequest.getNewPassword());
         userRepository.save(user);
