@@ -35,20 +35,20 @@ public class ChangePasswordRequestTest {
 
     @Test
     void shouldNotAllowToSetNewPasswordWithoutCapitalLetter() {
-        ChangePasswordRequest changePasswordRequest = new ChangePasswordRequest("Old@password", "new@password");
+        ChangePasswordRequest changePasswordRequest = new ChangePasswordRequest("Old@password1", "new@password");
 
         Set<ConstraintViolation<ChangePasswordRequest>> violations = validator.validate(changePasswordRequest);
 
-        assertThat(violations.iterator().next().getMessage(), is("Password must contain atleast one Capital Letter, one Special character, one Digit, Minimum of 8 and Maximum of 16 characters"));
+        assertThat(violations.iterator().next().getMessage(), is("New password must contain atleast one Capital Letter, one Special character, one Digit, Minimum of 8 and Maximum of 16 characters"));
     }
 
     @Test
     void shouldNotAllowToSetNewPasswordWithoutSpecialCharacter() {
-        ChangePasswordRequest changePasswordRequest = new ChangePasswordRequest("Old@password", "Newpassword");
+        ChangePasswordRequest changePasswordRequest = new ChangePasswordRequest("Old@password1", "Newpassword");
 
         Set<ConstraintViolation<ChangePasswordRequest>> violations = validator.validate(changePasswordRequest);
 
-        assertThat(violations.iterator().next().getMessage(), is("Password must contain atleast one Capital Letter, one Special character, one Digit, Minimum of 8 and Maximum of 16 characters"));
+        assertThat(violations.iterator().next().getMessage(), is("New password must contain atleast one Capital Letter, one Special character, one Digit, Minimum of 8 and Maximum of 16 characters"));
     }
 
     @Test
@@ -57,7 +57,7 @@ public class ChangePasswordRequestTest {
 
         Set<ConstraintViolation<ChangePasswordRequest>> violations = validator.validate(changePasswordRequest);
 
-        assertThat(violations.iterator().next().getMessage(), is("Password must contain atleast one Capital Letter, one Special character, one Digit, Minimum of 8 and Maximum of 16 characters"));
+        assertThat(violations.iterator().next().getMessage(), is("New password must contain atleast one Capital Letter, one Special character, one Digit, Minimum of 8 and Maximum of 16 characters"));
     }
 
     @Test
@@ -66,7 +66,7 @@ public class ChangePasswordRequestTest {
 
         Set<ConstraintViolation<ChangePasswordRequest>> violations = validator.validate(changePasswordRequest);
 
-        assertThat(violations.iterator().next().getMessage(), is("Password must contain atleast one Capital Letter, one Special character, one Digit, Minimum of 8 and Maximum of 16 characters"));
+        assertThat(violations.iterator().next().getMessage(), is("New password must contain atleast one Capital Letter, one Special character, one Digit, Minimum of 8 and Maximum of 16 characters"));
     }
 
     @Test
@@ -75,7 +75,7 @@ public class ChangePasswordRequestTest {
 
         Set<ConstraintViolation<ChangePasswordRequest>> violations = validator.validate(changePasswordRequest);
 
-        assertThat(violations.iterator().next().getMessage(), is("Password must contain atleast one Capital Letter, one Special character, one Digit, Minimum of 8 and Maximum of 16 characters"));
+        assertThat(violations.iterator().next().getMessage(), is("New password must contain atleast one Capital Letter, one Special character, one Digit, Minimum of 8 and Maximum of 16 characters"));
     }
 
     @Test
@@ -84,12 +84,12 @@ public class ChangePasswordRequestTest {
 
         Set<ConstraintViolation<ChangePasswordRequest>> violations = validator.validate(changePasswordRequest);
 
-        assertThat(violations.iterator().next().getMessage(), is("Password must contain atleast one Capital Letter, one Special character, one Digit, Minimum of 8 and Maximum of 16 characters"));
+        assertThat(violations.iterator().next().getMessage(), is("Current password must contain atleast one Capital Letter, one Special character, one Digit, Minimum of 8 and Maximum of 16 characters"));
     }
 
     @Test
-    public void shouldNotAllowNullFields() {
-        ChangePasswordRequest changePasswordRequest = new ChangePasswordRequest(null, null);
+    public void shouldNotAllowNullAndBlankFields() {
+        ChangePasswordRequest changePasswordRequest = new ChangePasswordRequest("", null);
 
         Set<ConstraintViolation<ChangePasswordRequest>> violations = validator.validate(changePasswordRequest);
 
@@ -98,18 +98,5 @@ public class ChangePasswordRequestTest {
         assertTrue(messages.containsAll(Arrays
                 .asList("Current password must be provided",
                         "New password must be provided")));
-    }
-
-    @Test
-    public void shouldNotAllowBlankFields() {
-        ChangePasswordRequest changePasswordRequest = new ChangePasswordRequest("", "");
-
-        Set<ConstraintViolation<ChangePasswordRequest>> violations = validator.validate(changePasswordRequest);
-
-        List<String> messages = violations.stream().map(ConstraintViolation::getMessage).collect(Collectors.toList());
-
-        assertTrue(messages.containsAll(Arrays
-                .asList("Current password must not be empty value",
-                        "New password must not be empty value")));
     }
 }
