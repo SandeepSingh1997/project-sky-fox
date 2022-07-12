@@ -38,6 +38,13 @@ public class CustomerTest {
         assertThat(violations.iterator().next().getMessage(), is("Customer name must be provided"));
     }
 
+    @Test
+    public void should_not_allow_invalid_email() {
+        final Customer customer = new Customer("testCustomer","abc_123gmail.com" ,"9977885566", user);
 
+        final Set<ConstraintViolation<Customer>> violations = validator.validate(customer);
+
+        assertThat(violations.iterator().next().getMessage(), is("Enter valid email"));
+    }
 
 }
