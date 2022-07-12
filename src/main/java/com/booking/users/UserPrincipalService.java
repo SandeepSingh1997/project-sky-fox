@@ -44,7 +44,7 @@ public class UserPrincipalService implements UserDetailsService {
         List<PasswordHistory> lastThreePasswords = passwordHistoryRepository.findRecentPasswordsByUserIdWithLimit(user.getId(), THREE.getValue());
         for (PasswordHistory password : lastThreePasswords) {
             if (password.getPasswordHistoryPK().getPassword().equals(changePasswordRequest.getNewPassword()))
-                throw new PasswordMatchesWithLastThreePasswordsException("New password matches with recent three passwords");
+                throw new PasswordMatchesWithLastThreePasswordsException("Entered new password matches with recent three passwords");
         }
 
         user.setPassword(changePasswordRequest.getNewPassword());

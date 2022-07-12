@@ -1,6 +1,7 @@
 package com.booking.handlers;
 
 import com.booking.exceptions.EnumValidationException;
+import com.booking.exceptions.PasswordMatchesWithLastThreePasswordsException;
 import com.booking.exceptions.PasswordMismatchException;
 import com.booking.handlers.models.ErrorResponse;
 import com.fasterxml.jackson.databind.exc.InvalidDefinitionException;
@@ -63,6 +64,12 @@ public class CustomExceptionHandler extends ResponseEntityExceptionHandler {
     @ExceptionHandler(PasswordMismatchException.class)
     public ResponseEntity<ErrorResponse> handlePasswordMismatchException(PasswordMismatchException ex) {
         ErrorResponse error = new ErrorResponse("Password Mismatch", singletonList(ex.getMessage()));
+        return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(PasswordMatchesWithLastThreePasswordsException.class)
+    public ResponseEntity<ErrorResponse> handlePasswordMatchesWithLastThreePasswordsException(PasswordMatchesWithLastThreePasswordsException ex) {
+        ErrorResponse error = new ErrorResponse("Password matches with last three passwords", singletonList(ex.getMessage()));
         return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
     }
 
