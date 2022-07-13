@@ -31,8 +31,8 @@ public class Customer {
 
     @Column(nullable = false)
     @JsonProperty
-    @Pattern(regexp = "(a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+$)", message = "Enter valid email")
     @NotBlank(message = "Customer email must be provided")
+    @Pattern(regexp = "(a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+$)", message = "Enter valid email")
     @ApiModelProperty(name = "customer email", value = "Email of customer", required = true, example = "xyz@abc.com", position = 3)
     private String email;
 
