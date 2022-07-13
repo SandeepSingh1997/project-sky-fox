@@ -4,8 +4,8 @@ import com.booking.passwordHistory.repository.Constants;
 import com.booking.passwordHistory.repository.PasswordHistory;
 import com.booking.passwordHistory.repository.PasswordHistoryPK;
 import com.booking.passwordHistory.repository.PasswordHistoryRepository;
-import com.booking.users.User;
-import com.booking.users.UserRepository;
+import com.booking.users.repository.User;
+import com.booking.users.repository.UserRepository;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
@@ -25,7 +25,7 @@ public class PasswordHistoryService {
         this.userRepository = userRepository;
     }
 
-    public List<PasswordHistory> findRecentPasswordsByUserId(Long userId, Constants three) {
+    public List<String> findRecentPasswordsByUserId(Long userId, Constants three) {
         return passwordHistoryRepository.findRecentPasswordsByUserIdWithLimit(userId, three.getValue());
     }
 

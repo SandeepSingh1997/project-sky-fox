@@ -1,7 +1,7 @@
 package com.booking.passwordHistory.repository;
 
-import com.booking.users.User;
-import com.booking.users.UserRepository;
+import com.booking.users.repository.User;
+import com.booking.users.repository.UserRepository;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -54,7 +54,7 @@ public class PasswordHistoryRepositoryTest {
         passwords.add(new PasswordHistory(new PasswordHistoryPK(user, "Password5"), instant));
 
         passwordHistoryRepository.saveAll(passwords);
-        List<PasswordHistory> recentPasswords = passwordHistoryRepository.findRecentPasswordsByUserIdWithLimit(user.getId(), THREE.getValue());
+        List<String> recentPasswords = passwordHistoryRepository.findRecentPasswordsByUserIdWithLimit(user.getId(), THREE.getValue());
 
         assertEquals(3, recentPasswords.size());
     }

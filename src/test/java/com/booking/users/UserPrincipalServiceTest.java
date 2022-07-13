@@ -3,13 +3,12 @@ package com.booking.users;
 import com.booking.exceptions.PasswordMatchesWithLastThreePasswordsException;
 import com.booking.exceptions.PasswordMismatchException;
 import com.booking.passwordHistory.PasswordHistoryService;
-import com.booking.passwordHistory.repository.PasswordHistory;
-import com.booking.passwordHistory.repository.PasswordHistoryPK;
+import com.booking.users.repository.User;
+import com.booking.users.repository.UserRepository;
+import com.booking.users.view.ChangePasswordRequest;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.sql.Timestamp;
-import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -56,18 +55,15 @@ class UserPrincipalServiceTest {
     @Test
     void shouldNotBeAbleToChangePasswordWhenNewPasswordMatchesWithAnyOneOfPreviousThreePasswords() throws PasswordMismatchException {
         User user = new User("test-user", "Password@123");
-        List<PasswordHistory> passwords = new ArrayList<>();
-        Timestamp instant = Timestamp.from(Instant.now());
-        passwords.add(new PasswordHistory(new PasswordHistoryPK(user, "Password1"), instant));
-        instant = Timestamp.valueOf(instant.toLocalDateTime().plusDays(1));
-        passwords.add(new PasswordHistory(new PasswordHistoryPK(user, "Password2"), instant));
-        instant = Timestamp.valueOf(instant.toLocalDateTime().plusDays(1));
-        passwords.add(new PasswordHistory(new PasswordHistoryPK(user, "Password3"), instant));
+        List<String> passwords = new ArrayList<>();
+        passwords.add("Password@1");
+        passwords.add("Password@2");
+        passwords.add("Password@3");
 
         when(userRepository.findByUsername(user.getUsername())).thenReturn(Optional.of(user));
         when(passwordHistoryService.findRecentPasswordsByUserId(user.getId(), THREE))
                 .thenReturn(passwords);
-        ChangePasswordRequest changePasswordRequest = new ChangePasswordRequest(user.getPassword(), "Password2");
+        ChangePasswordRequest changePasswordRequest = new ChangePasswordRequest(user.getPassword(), "Password@2");
 
         assertThrows(PasswordMatchesWithLastThreePasswordsException.class, () -> {
             userPrincipalService.changePassword(user.getUsername(), changePasswordRequest);
@@ -77,13 +73,11 @@ class UserPrincipalServiceTest {
     @Test
     void shouldBeAbleToSaveNewPasswordInPasswordHistoryTableWhenItDoesNotMatchesWithLastThreePasswords() throws Exception {
         User user = new User("test-user", "Password@123");
-        List<PasswordHistory> passwords = new ArrayList<>();
-        Timestamp instant = Timestamp.from(Instant.now());
-        passwords.add(new PasswordHistory(new PasswordHistoryPK(user, "Password@1"), instant));
-        instant = Timestamp.valueOf(instant.toLocalDateTime().plusDays(1));
-        passwords.add(new PasswordHistory(new PasswordHistoryPK(user, "Password@2"), instant));
-        instant = Timestamp.valueOf(instant.toLocalDateTime().plusDays(1));
-        passwords.add(new PasswordHistory(new PasswordHistoryPK(user, "Password@3"), instant));
+        List<String> passwords = new ArrayList<>();
+        passwords.add("Password@1");
+        passwords.add("Password@2");
+        passwords.add("Password@3");
+
         when(userRepository.findByUsername(user.getUsername())).thenReturn(Optional.of(user));
         when(passwordHistoryService.findRecentPasswordsByUserId(user.getId(), THREE))
                 .thenReturn(passwords);

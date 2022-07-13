@@ -1,4 +1,4 @@
-package com.booking.users;
+package com.booking.users.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;

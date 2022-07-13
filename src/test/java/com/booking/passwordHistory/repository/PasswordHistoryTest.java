@@ -1,6 +1,6 @@
 package com.booking.passwordHistory.repository;
 
-import com.booking.users.User;
+import com.booking.users.repository.User;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

@@ -1,5 +1,6 @@
-package com.booking.users;
+package com.booking.users.view;
 
+import com.booking.users.repository.User;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 

@@ -1,4 +1,4 @@
-package com.booking.users;
+package com.booking.users.repository;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.annotations.ApiModelProperty;

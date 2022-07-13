@@ -1,4 +1,16 @@
 fileignoreconfig:
 - filename: src/main/resources/db/migration/V1.13__CreateCustomerTable.sql
   checksum: 8e94b0dd3ab8fc88e4480e7cd6bd982638b79a6e5c0a27d7eae37822432beeb0
+- filename: src/main/java/com/booking/passwordHistory/repository/PasswordHistoryRepository.java
+  checksum: c08b1fbd5eb0bb1011958ff6f77d795a991e3be32eddcfc3378b70fec0152251
+- filename: src/test/java/com/booking/passwordHistory/PasswordHistoryServiceTest.java
+  checksum: 567f5d145decf33ebda1e88c94cd9e61b5ec47c0a8d4a51222e5e24757c00f79
+- filename: src/test/java/com/booking/passwordHistory/repository/PasswordHistoryRepositoryTest.java
+  checksum: 2c8e9d8c2e77cb8c19a27fe97c203db44e8a5702e1fa19c4622da08e6f3d245b
+- filename: src/test/java/com/booking/users/view/ChangePasswordRequestTest.java
+  checksum: b6a5fca8773221fc1ad9f390884c77a332a7b5d0c28a002adcce199209279ef1
+- filename: src/test/java/com/booking/users/UserPrincipalServiceTest.java
+  checksum: 8c611313aa153471d691e00551e6b0ff9aca8665f2491ba68ed509b8d93c53c7
+- filename: src/main/java/com/booking/users/UserPrincipalService.java
+  checksum: 4864fc6e669aa18bbdc764193c64359b7e2b3237b9ef5e10958b937210768597
 version: ""
