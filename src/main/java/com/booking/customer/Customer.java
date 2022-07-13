@@ -1,6 +1,6 @@
 package com.booking.customer;
 
-import com.booking.users.User;
+import com.booking.users.repository.User;
 import com.booking.utilities.serializers.date.DateSerializer;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -32,7 +32,8 @@ public class Customer {
     @Column(nullable = false)
     @JsonProperty
     @NotBlank(message = "Customer email must be provided")
-    @Pattern(regexp = "(a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+$)", message = "Enter valid email")
+    @Pattern(regexp = "([a-zA-Z0-9+_.-]+@[a-zA-Z" +
+            "0-9.-]+$)", message = "Enter valid email")
     @ApiModelProperty(name = "customer email", value = "Email of customer", required = true, example = "xyz@abc.com", position = 3)
     private String email;
 

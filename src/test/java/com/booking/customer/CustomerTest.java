@@ -3,7 +3,7 @@ package com.booking.customer;
 import com.booking.movieAudience.repository.MovieAudience;
 import com.booking.shows.respository.Show;
 import com.booking.slots.repository.Slot;
-import com.booking.users.User;
+import com.booking.users.repository.User;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -31,7 +31,7 @@ public class CustomerTest {
 
     @Test
     public void should_not_allow_customer_name_to_be_blank() {
-        final Customer customer = new Customer("","abc_123@gmail.com" ,"9977885566", user);
+        final Customer customer = new Customer("","Axyz123@gmail.com" ,"9977885566", user);
 
         final Set<ConstraintViolation<Customer>> violations = validator.validate(customer);
 
