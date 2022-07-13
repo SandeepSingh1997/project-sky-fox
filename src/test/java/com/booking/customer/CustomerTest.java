@@ -1,8 +1,6 @@
 package com.booking.customer;
 
-import com.booking.movieAudience.repository.MovieAudience;
-import com.booking.shows.respository.Show;
-import com.booking.slots.repository.Slot;
+
 import com.booking.users.repository.User;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -10,13 +8,12 @@ import org.junit.jupiter.api.Test;
 import javax.validation.ConstraintViolation;
 import javax.validation.Validation;
 import javax.validation.Validator;
-import java.math.BigDecimal;
-import java.sql.Date;
-import java.sql.Time;
+
 import java.util.Set;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class CustomerTest {
     private Validator validator;
@@ -63,6 +60,24 @@ public class CustomerTest {
         final Set<ConstraintViolation<Customer>> violations = validator.validate(customer);
 
         assertThat(violations.iterator().next().getMessage(), is("Phone number must be provided"));
+    }
+
+    @Test
+    public void should_return_no_violation() {
+        final Customer customer = new Customer("testCustomer","abc123@gmail.com" ,"1234567890", user);
+
+        final Set<ConstraintViolation<Customer>> violations = validator.validate(customer);
+
+        assertTrue(violations.isEmpty());
+    }
+
+    @Test
+    public void should_not_allow_null_user() {
+        final Customer customer = new Customer("testCustomer","abc123@gmail.com" ,"1234567890", null);
+
+        final Set<ConstraintViolation<Customer>> violations = validator.validate(customer);
+
+        assertThat(violations.iterator().next().getMessage(), is("User must be provided"));
     }
 
 }
