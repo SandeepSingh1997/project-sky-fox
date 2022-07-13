@@ -47,4 +47,22 @@ public class CustomerTest {
         assertThat(violations.iterator().next().getMessage(), is("Enter valid email"));
     }
 
+    @Test
+    public void should_allow_phone_number_only_10_digits() {
+        final Customer customer = new Customer("testCustomer","abc123@gmail.com" ,"99778855667", user);
+
+        final Set<ConstraintViolation<Customer>> violations = validator.validate(customer);
+
+        assertThat(violations.iterator().next().getMessage(), is("Phone number must have exactly 10 digits"));
+    }
+
+    @Test
+    public void should_not_allow_blank_phone_number() {
+        final Customer customer = new Customer("testCustomer","abc123@gmail.com" ,"", user);
+
+        final Set<ConstraintViolation<Customer>> violations = validator.validate(customer);
+
+        assertThat(violations.iterator().next().getMessage(), is("Phone number must be provided"));
+    }
+
 }
