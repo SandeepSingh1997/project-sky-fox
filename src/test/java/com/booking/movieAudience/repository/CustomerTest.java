@@ -46,4 +46,5 @@ public class CustomerTest {
 
         assertThat(violations.iterator().next().getMessage(), is("Phone number must be provided"));
     }
+
 }
