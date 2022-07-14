@@ -2,9 +2,9 @@ package com.booking.bookings;
 
 import com.booking.bookings.repository.Booking;
 import com.booking.bookings.repository.BookingRepository;
+import com.booking.exceptions.NoSeatAvailableException;
 import com.booking.movieAudience.repository.MovieAudience;
 import com.booking.movieAudience.repository.MovieAudienceRepository;
-import com.booking.exceptions.NoSeatAvailableException;
 import com.booking.shows.respository.Show;
 import com.booking.shows.respository.ShowRepository;
 import com.booking.slots.repository.Slot;

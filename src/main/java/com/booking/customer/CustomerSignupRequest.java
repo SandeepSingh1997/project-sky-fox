@@ -1,5 +1,6 @@
 package com.booking.customer;
 
+import com.booking.roles.repository.Role;
 import com.booking.users.repository.User;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.annotations.ApiModelProperty;
@@ -57,6 +58,6 @@ public class CustomerSignupRequest {
     }
 
     public Customer getCustomer() {
-        return new Customer(this.name, this.email, this.phoneNumber, new User(this.username, this.password));
+        return new Customer(this.name, this.email, this.phoneNumber, new User(this.username, this.password, new Role("Customer")));
     }
 }

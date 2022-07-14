@@ -1,5 +1,6 @@
 package com.booking.passwordHistory.repository;
 
+import com.booking.roles.repository.Role;
 import com.booking.users.repository.User;
 import com.booking.users.repository.UserRepository;
 import org.junit.jupiter.api.AfterEach;
@@ -16,6 +17,7 @@ import java.util.List;
 import static com.booking.passwordHistory.repository.Constants.THREE;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+
 @DataJpaTest
 public class PasswordHistoryRepositoryTest {
 
@@ -29,7 +31,7 @@ public class PasswordHistoryRepositoryTest {
 
     @BeforeEach
     public void beforeEach() {
-        user = new User("test-user", "Password1");
+        user = new User("test-user", "Password1", new Role("Admin"));
         userRepository.save(user);
     }
 

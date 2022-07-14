@@ -1,5 +1,6 @@
 package com.booking;
 
+import com.booking.roles.repository.Role;
 import com.booking.users.repository.User;
 import com.booking.users.repository.UserRepository;
 import org.springframework.boot.CommandLineRunner;
@@ -9,14 +10,18 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class DataSeeder {
 
+
     @Bean
     CommandLineRunner initDatabase(UserRepository repository) {
         return args -> {
             if (repository.findByUsername("seed-user-1").isEmpty()) {
-                repository.save(new User("seed-user-1", "foobar"));
+                repository.save(new User("seed-user-1", "Foobar@123", new Role("Admin")));
             }
             if (repository.findByUsername("seed-user-2").isEmpty()) {
-                repository.save(new User("seed-user-2", "foobar"));
+                repository.save(new User("seed-user-2", "Foobar@124", new Role("Admin")));
+            }
+            if (repository.findByUsername("seed-user-3").isEmpty()) {
+                repository.save(new User("seed-user-3", "Foobar@125", new Role("Admin")));
             }
         };
     }
