@@ -17,4 +17,6 @@ fileignoreconfig:
   checksum: b98fb95094940bc0721755fb39da8d0864e9e992765804a0dbb528adeff675a2
 - filename: src/main/resources/db/migration/V1.15__AlterUserTable.sql
   checksum: d7a522df915f8c963103bd92c2e992378f4af2ccbdb9040f2de48939993d8a5c
+- filename: src/test/java/com/booking/customer/CustomerControllerIntegrationTest.java
+  checksum: 3a685774af8367eaa8dac1a088169f3f0805ad2d9ab29204019b981ceaada103
 version: ""
