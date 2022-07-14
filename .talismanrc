@@ -13,4 +13,6 @@ fileignoreconfig:
   checksum: 8c611313aa153471d691e00551e6b0ff9aca8665f2491ba68ed509b8d93c53c7
 - filename: src/main/java/com/booking/users/UserPrincipalService.java
   checksum: 4864fc6e669aa18bbdc764193c64359b7e2b3237b9ef5e10958b937210768597
+- filename: src/main/java/com/booking/customer/CustomerSignupRequest.java
+  checksum: 53bf7d9fd11da523ccad01cba16f73c21506bd19768b514a19fa933a6fb7cc32
 version: ""
