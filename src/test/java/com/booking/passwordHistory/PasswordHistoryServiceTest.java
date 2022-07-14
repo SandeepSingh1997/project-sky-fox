@@ -3,6 +3,7 @@ package com.booking.passwordHistory;
 import com.booking.passwordHistory.repository.PasswordHistory;
 import com.booking.passwordHistory.repository.PasswordHistoryPK;
 import com.booking.passwordHistory.repository.PasswordHistoryRepository;
+import com.booking.roles.repository.Role;
 import com.booking.users.repository.User;
 import com.booking.users.repository.UserRepository;
 import org.junit.jupiter.api.BeforeEach;
@@ -36,14 +37,14 @@ public class PasswordHistoryServiceTest {
         passwordHistoryRepository = mock(PasswordHistoryRepository.class);
         userRepository = mock(UserRepository.class);
         passwordHistoryService = new PasswordHistoryService(passwordHistoryRepository, userRepository);
-        user = new User("test-user", "Password@123");
+        user = new User("test-user", "Password@123", new Role("Admin"));
         Timestamp instant = Timestamp.from(Instant.now());
         passwordHistory = new PasswordHistory(new PasswordHistoryPK(user, "Password@12"), instant);
     }
 
     @Test
     void shouldBeAbleReturnRecentPasswords() {
-        User user = new User("test-user", "Password@123");
+        User user = new User("test-user", "Password@123", new Role("Admin"));
         List<String> passwords = new ArrayList<>();
         passwords.add("Password@1");
         passwords.add("Password@2");
@@ -70,7 +71,7 @@ public class PasswordHistoryServiceTest {
 
     @Test
     void shouldBeAbleToThrowWhenInvalidUserIdGiven() {
-        User user = new User("test-user", "Password@123");
+        User user = new User("test-user", "Password@123", new Role("Admin"));
         when(userRepository.findById(user.getId())).thenThrow(new UsernameNotFoundException("User is not found"));
 
         assertThrows(UsernameNotFoundException.class,

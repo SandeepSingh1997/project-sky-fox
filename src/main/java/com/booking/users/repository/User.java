@@ -1,5 +1,6 @@
 package com.booking.users.repository;
 
+import com.booking.roles.repository.Role;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.annotations.ApiModelProperty;
 
@@ -25,12 +26,17 @@ public class User {
     @ApiModelProperty(name = "password", value = "Password of the user", required = true, example = "password", position = 2)
     private String password;
 
+    @ManyToOne(cascade = {CascadeType.ALL})
+    @JoinColumn(name = "role_id")
+    private Role role;
+
     public User() {
     }
 
-    public User(String username, String password) {
+    public User(String username, String password, Role role) {
         this.username = username;
         this.password = password;
+        this.role = role;
     }
 
     public Long getId() {

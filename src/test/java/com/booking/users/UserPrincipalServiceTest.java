@@ -3,6 +3,7 @@ package com.booking.users;
 import com.booking.exceptions.PasswordMatchesWithLastThreePasswordsException;
 import com.booking.exceptions.PasswordMismatchException;
 import com.booking.passwordHistory.PasswordHistoryService;
+import com.booking.roles.repository.Role;
 import com.booking.users.repository.User;
 import com.booking.users.repository.UserRepository;
 import com.booking.users.view.ChangePasswordRequest;
@@ -33,7 +34,7 @@ class UserPrincipalServiceTest {
     @Test
     void shouldBeAbleToChangePasswordInRepository() throws Exception {
         ChangePasswordRequest changePasswordRequest = new ChangePasswordRequest("Old@Password1", "New@Password1");
-        User user = new User("username", changePasswordRequest.getCurrentPassword());
+        User user = new User("username", changePasswordRequest.getCurrentPassword(),new Role("Admin"));
         when(userRepository.findByUsername(user.getUsername())).thenReturn(Optional.of(user));
 
         userPrincipalService.changePassword(user.getUsername(), changePasswordRequest);
@@ -44,7 +45,7 @@ class UserPrincipalServiceTest {
     @Test
     void shouldReturnExceptionWhenReceivedCurrentPasswordDoesNotMatchTheCurrentPasswordInTheRepository() {
         ChangePasswordRequest changePasswordRequest = new ChangePasswordRequest("Old@Password1", "New@Password1");
-        User user = new User("username", "differentCurrent@Password");
+        User user = new User("username", "differentCurrent@Password",new Role("Admin"));
 
         when(userRepository.findByUsername(user.getUsername())).thenReturn(Optional.of(user));
         assertThrows(PasswordMismatchException.class, () -> {
@@ -54,7 +55,7 @@ class UserPrincipalServiceTest {
 
     @Test
     void shouldNotBeAbleToChangePasswordWhenNewPasswordMatchesWithAnyOneOfPreviousThreePasswords() throws PasswordMismatchException {
-        User user = new User("test-user", "Password@123");
+        User user = new User("test-user", "Password@123",new Role("Admin"));
         List<String> passwords = new ArrayList<>();
         passwords.add("Password@1");
         passwords.add("Password@2");
@@ -72,7 +73,7 @@ class UserPrincipalServiceTest {
 
     @Test
     void shouldBeAbleToSaveNewPasswordInPasswordHistoryTableWhenItDoesNotMatchesWithLastThreePasswords() throws Exception {
-        User user = new User("test-user", "Password@123");
+        User user = new User("test-user", "Password@123",new Role("Admin"));
         List<String> passwords = new ArrayList<>();
         passwords.add("Password@1");
         passwords.add("Password@2");

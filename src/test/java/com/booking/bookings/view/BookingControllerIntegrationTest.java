@@ -32,10 +32,10 @@ import java.time.Duration;
 import static com.booking.shows.respository.Constants.MAX_NO_OF_SEATS_PER_BOOKING;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
-import static org.mockito.ArgumentMatchers.matches;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+
 
 @SpringBootTest(classes = App.class)
 @AutoConfigureMockMvc
@@ -103,8 +103,8 @@ public class BookingControllerIntegrationTest {
 
 
         mockMvc.perform(post("/bookings")
-                .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
-                .content(requestJson))
+                        .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
+                        .content(requestJson))
                 .andExpect(status().isCreated())
                 .andExpect(jsonPath("$.id").exists())
                 .andExpect(content().json("{" +
@@ -129,8 +129,8 @@ public class BookingControllerIntegrationTest {
 
 
         mockMvc.perform(post("/bookings")
-                .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
-                .content(moreThanAllowedSeatsRequestJson))
+                        .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
+                        .content(moreThanAllowedSeatsRequestJson))
                 .andExpect(status().isBadRequest())
                 .andReturn();
     }
@@ -147,8 +147,8 @@ public class BookingControllerIntegrationTest {
                 "}";
 
         mockMvc.perform(post("/bookings")
-                .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
-                .content(overCapacityRequest))
+                        .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
+                        .content(overCapacityRequest))
                 .andExpect(status().is5xxServerError())
                 .andReturn();
 
@@ -164,8 +164,8 @@ public class BookingControllerIntegrationTest {
 
         for (int i = 0; i < 6; i++) { // simulate booking for 90 seats for a same show
             mockMvc.perform(post("/bookings")
-                    .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
-                    .content(successRequest))
+                            .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
+                            .content(successRequest))
                     .andExpect(status().isCreated())
                     .andReturn();
         }

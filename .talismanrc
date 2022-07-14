@@ -15,4 +15,6 @@ fileignoreconfig:
   checksum: 4864fc6e669aa18bbdc764193c64359b7e2b3237b9ef5e10958b937210768597
 - filename: src/main/resources/db/migration/V1.14__CreateRolesTable.sql
   checksum: b98fb95094940bc0721755fb39da8d0864e9e992765804a0dbb528adeff675a2
+- filename: src/main/resources/db/migration/V1.15__AlterUserTable.sql
+  checksum: d7a522df915f8c963103bd92c2e992378f4af2ccbdb9040f2de48939993d8a5c
 version: ""

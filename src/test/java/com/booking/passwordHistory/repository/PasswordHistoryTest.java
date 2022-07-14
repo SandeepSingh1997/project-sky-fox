@@ -1,5 +1,6 @@
 package com.booking.passwordHistory.repository;
 
+import com.booking.roles.repository.Role;
 import com.booking.users.repository.User;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -28,7 +29,7 @@ public class PasswordHistoryTest {
 
     @Test
     void shouldNotReturnAnyViolations() {
-        User user = new User("test-user", "Password@123");
+        User user = new User("test-user", "Password@123", new Role("Admin"));
         Timestamp instant = Timestamp.from(Instant.now());
         PasswordHistory passwordHistory = new PasswordHistory(new PasswordHistoryPK(user, "Password@123"), instant);
 
@@ -63,7 +64,7 @@ public class PasswordHistoryTest {
 
     @Test
     void shouldNotAllowInvalidPassword() {
-        User user = new User("test-user", "Password@123");
+        User user = new User("test-user", "Password@123", new Role("Admin"));
         PasswordHistoryPK passwordHistoryPK = new PasswordHistoryPK(user, "new");
 
         Set<ConstraintViolation<PasswordHistoryPK>> validate = validator.validate(passwordHistoryPK);

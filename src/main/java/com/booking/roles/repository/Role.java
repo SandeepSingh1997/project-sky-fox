@@ -16,7 +16,7 @@ public class Role {
     @JsonProperty
     @NotBlank(message = "Role must be provided")
     @Column(nullable = false, unique = true)
-    @ApiModelProperty(name = "name", value = "Name of role (must be unique)", required = true, example = "Customer", position = 1)
+    @ApiModelProperty(name = "name", value = "Name of role (must be unique)", required = true, example = "Customer", position = 2)
     private String name;
 
     public Role() {

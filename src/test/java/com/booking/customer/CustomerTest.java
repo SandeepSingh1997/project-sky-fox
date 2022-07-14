@@ -1,6 +1,7 @@
 package com.booking.customer;
 
 
+import com.booking.roles.repository.Role;
 import com.booking.users.repository.User;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -8,7 +9,6 @@ import org.junit.jupiter.api.Test;
 import javax.validation.ConstraintViolation;
 import javax.validation.Validation;
 import javax.validation.Validator;
-
 import java.util.Set;
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -23,12 +23,12 @@ public class CustomerTest {
     @BeforeEach
     public void beforeEach() {
         validator = Validation.buildDefaultValidatorFactory().getValidator();
-        user = new User("seed-user-1","foobar");
+        user = new User("seed-user-1", "foobar", new Role("Admin"));
     }
 
     @Test
     public void should_not_allow_customer_name_to_be_blank() {
-        final Customer customer = new Customer("","Axyz123@gmail.com" ,"9977885566", user);
+        final Customer customer = new Customer("", "Axyz123@gmail.com", "9977885566", user);
 
         final Set<ConstraintViolation<Customer>> violations = validator.validate(customer);
 
@@ -37,7 +37,7 @@ public class CustomerTest {
 
     @Test
     public void should_not_allow_invalid_email() {
-        final Customer customer = new Customer("testCustomer","abc_123gmail.com" ,"9977885566", user);
+        final Customer customer = new Customer("testCustomer", "abc_123gmail.com", "9977885566", user);
 
         final Set<ConstraintViolation<Customer>> violations = validator.validate(customer);
 
@@ -46,7 +46,7 @@ public class CustomerTest {
 
     @Test
     public void should_allow_phone_number_only_10_digits() {
-        final Customer customer = new Customer("testCustomer","abc123@gmail.com" ,"99778855667", user);
+        final Customer customer = new Customer("testCustomer", "abc123@gmail.com", "99778855667", user);
 
         final Set<ConstraintViolation<Customer>> violations = validator.validate(customer);
 
@@ -55,7 +55,7 @@ public class CustomerTest {
 
     @Test
     public void should_not_allow_blank_phone_number() {
-        final Customer customer = new Customer("testCustomer","abc123@gmail.com" ,"", user);
+        final Customer customer = new Customer("testCustomer", "abc123@gmail.com", "", user);
 
         final Set<ConstraintViolation<Customer>> violations = validator.validate(customer);
 
@@ -64,7 +64,7 @@ public class CustomerTest {
 
     @Test
     public void should_return_no_violation() {
-        final Customer customer = new Customer("testCustomer","abc123@gmail.com" ,"1234567890", user);
+        final Customer customer = new Customer("testCustomer", "abc123@gmail.com", "1234567890", user);
 
         final Set<ConstraintViolation<Customer>> violations = validator.validate(customer);
 
@@ -73,7 +73,7 @@ public class CustomerTest {
 
     @Test
     public void should_not_allow_null_user() {
-        final Customer customer = new Customer("testCustomer","abc123@gmail.com" ,"1234567890", null);
+        final Customer customer = new Customer("testCustomer", "abc123@gmail.com", "1234567890", null);
 
         final Set<ConstraintViolation<Customer>> violations = validator.validate(customer);
 

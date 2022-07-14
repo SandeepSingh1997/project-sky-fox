@@ -1,16 +1,15 @@
 package com.booking.roles.repository;
 
-import com.booking.bookings.repository.Booking;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import javax.validation.ConstraintViolation;
 import javax.validation.Validation;
 import javax.validation.Validator;
-
 import java.util.Set;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class RoleTest {
 
@@ -31,5 +30,13 @@ class RoleTest {
         assertTrue(violations.isEmpty());
 
 
+    }
+
+    @Test
+    void shouldReturnViolationIfRoleIsNotDefined() {
+        Role role = new Role(null);
+        final Set<ConstraintViolation<Role>> violations = validator.validate(role);
+
+        assertFalse(violations.isEmpty());
     }
 }
