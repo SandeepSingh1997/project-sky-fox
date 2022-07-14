@@ -3,6 +3,7 @@ package com.booking.handlers;
 import com.booking.exceptions.EnumValidationException;
 import com.booking.exceptions.PasswordMatchesWithLastThreePasswordsException;
 import com.booking.exceptions.PasswordMismatchException;
+import com.booking.exceptions.UsernameAlreadyExistsException;
 import com.booking.handlers.models.ErrorResponse;
 import com.fasterxml.jackson.databind.exc.InvalidDefinitionException;
 import org.jetbrains.annotations.NotNull;
@@ -72,6 +73,13 @@ public class CustomExceptionHandler extends ResponseEntityExceptionHandler {
         ErrorResponse error = new ErrorResponse("Password matches with last three passwords", singletonList(ex.getMessage()));
         return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
     }
+
+    @ExceptionHandler(UsernameAlreadyExistsException.class)
+    public ResponseEntity<ErrorResponse> handleUsernameAlreadyExistsException(UsernameAlreadyExistsException ex){
+        ErrorResponse error = new ErrorResponse("Username Already exists", singletonList(ex.getMessage()));
+        return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
+    }
+
 
     @ExceptionHandler(Exception.class)
     public ResponseEntity<ErrorResponse> handleAnyException() {
