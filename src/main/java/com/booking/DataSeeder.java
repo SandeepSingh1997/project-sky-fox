@@ -13,10 +13,13 @@ public class DataSeeder {
     CommandLineRunner initDatabase(UserRepository repository) {
         return args -> {
             if (repository.findByUsername("seed-user-1").isEmpty()) {
-                repository.save(new User("seed-user-1", "foobar"));
+                repository.save(new User("seed-user-1", "Foobar@123"));
             }
             if (repository.findByUsername("seed-user-2").isEmpty()) {
-                repository.save(new User("seed-user-2", "foobar"));
+                repository.save(new User("seed-user-2", "Foobar@124"));
+            }
+            if (repository.findByUsername("seed-user-3").isEmpty()) {
+                repository.save(new User("seed-user-3", "Foobar@125"));
             }
         };
     }
