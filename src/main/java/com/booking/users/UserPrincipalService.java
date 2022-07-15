@@ -42,12 +42,12 @@ public class UserPrincipalService implements UserDetailsService {
 
     public void changePassword(String username, ChangePasswordRequest changePasswordRequest) throws Exception {
         User user = findUserByUsername(username);
-        if (!bCryptPasswordEncoder.matches(changePasswordRequest.getCurrentPassword(), user.getPassword()))
+        if (!isMatches(changePasswordRequest.getCurrentPassword(), user.getPassword()))
             throw new PasswordMismatchException("Entered current password is not matching with existing password");
 
         List<String> lastThreePasswords = passwordHistoryService.findRecentPasswordsByUserId(user.getId(), THREE);
         for (String password : lastThreePasswords) {
-            if (bCryptPasswordEncoder.matches(changePasswordRequest.getNewPassword(), password))
+            if (isMatches(changePasswordRequest.getNewPassword(), password))
                 throw new PasswordMatchesWithLastThreePasswordsException("Entered new password matches with recent three passwords");
         }
 
@@ -56,5 +56,9 @@ public class UserPrincipalService implements UserDetailsService {
 
         user.setPassword(hashedNewPassword);
         userRepository.save(user);
+    }
+
+    private boolean isMatches(String changePasswordRequest, String user) {
+        return bCryptPasswordEncoder.matches(changePasswordRequest, user);
     }
 }
