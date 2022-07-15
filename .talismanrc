@@ -10,9 +10,9 @@ fileignoreconfig:
 - filename: src/test/java/com/booking/users/view/ChangePasswordRequestTest.java
   checksum: b6a5fca8773221fc1ad9f390884c77a332a7b5d0c28a002adcce199209279ef1
 - filename: src/test/java/com/booking/users/UserPrincipalServiceTest.java
-  checksum: 8c611313aa153471d691e00551e6b0ff9aca8665f2491ba68ed509b8d93c53c7
+  checksum: 588150c26accb8bfe78ce55af47de354999bc476be303e66c0d7f67e995e41c9
 - filename: src/main/java/com/booking/users/UserPrincipalService.java
-  checksum: 4864fc6e669aa18bbdc764193c64359b7e2b3237b9ef5e10958b937210768597
+  checksum: e452520ecd6c6a90c442251d87e11a16849cfc1a706193e008134443539ff9cd
 - filename: src/main/resources/db/migration/V1.14__CreateRolesTable.sql
   checksum: b98fb95094940bc0721755fb39da8d0864e9e992765804a0dbb528adeff675a2
 - filename: src/main/resources/db/migration/V1.15__AlterUserTable.sql

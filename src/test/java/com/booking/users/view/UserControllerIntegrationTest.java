@@ -8,7 +8,6 @@ import com.booking.roles.repository.Role;
 import com.booking.users.repository.User;
 import com.booking.users.repository.UserRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.junit.Ignore;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -18,6 +17,7 @@ import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabas
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.sql.Timestamp;
@@ -38,14 +38,13 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 class UserControllerIntegrationTest {
 
     @Autowired
+    private BCryptPasswordEncoder bCryptPasswordEncoder;
+    @Autowired
     private MockMvc mockMvc;
-
     @Autowired
     private UserRepository userRepository;
-
     @Autowired
     private PasswordHistoryRepository passwordHistoryRepository;
-
     @Autowired
     private ObjectMapper objectMapper;
 
@@ -63,7 +62,9 @@ class UserControllerIntegrationTest {
 
     @Test
     public void shouldLoginSuccessfully() throws Exception {
-        userRepository.save(new User("test-user", "Password@12",new Role("Admin")));
+        User user = new User("test-user", "Password@12", new Role("Admin"));
+        user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+        userRepository.save(user);
         mockMvc.perform(get("/login")
                         .with(httpBasic("test-user", "Password@12")))
                 .andExpect(status().isOk());
@@ -77,7 +78,9 @@ class UserControllerIntegrationTest {
 
     @Test
     void shouldBeAbleToUpdateThePasswordSuccessfully() throws Exception {
-        userRepository.save(new User("test-user", "Password@12",new Role("Admin")));
+        User user = new User("test-user", "Password@12", new Role("Admin"));
+        user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+        userRepository.save(user);
         ChangePasswordRequest changePasswordRequest = new ChangePasswordRequest("Password@12", "New@password12");
         String changePasswordRequestBodyJson = objectMapper.writeValueAsString(changePasswordRequest);
 
@@ -90,7 +93,9 @@ class UserControllerIntegrationTest {
 
     @Test
     void shouldNotBeAbleToUpdateThePasswordWhenValidationFails() throws Exception {
-        userRepository.save(new User("test-user", "Password@12",new Role("Admin")));
+        User user = new User("test-user", "Password@12", new Role("Admin"));
+        user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+        userRepository.save(user);
         ChangePasswordRequest changePasswordRequest = new ChangePasswordRequest("Password@12", "New");
         String changePasswordRequestBodyJson = objectMapper.writeValueAsString(changePasswordRequest);
 
@@ -103,7 +108,9 @@ class UserControllerIntegrationTest {
 
     @Test
     void shouldNotBeAbleToUpdateThePasswordWhenProvidedPasswordMisMatchExistingPassword() throws Exception {
-        userRepository.save(new User("test-user", "Password@12",new Role("Admin")));
+        User user = new User("test-user", "Password@12", new Role("Admin"));
+        user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+        userRepository.save(user);
         ChangePasswordRequest changePasswordRequest = new ChangePasswordRequest("WrongPass@12", "NewPass@12");
         String changePasswordRequestBodyJson = objectMapper.writeValueAsString(changePasswordRequest);
 
@@ -118,7 +125,8 @@ class UserControllerIntegrationTest {
 
     @Test
     void shouldNotBeAbleToUpdateThePasswordWhenProvidedNewPasswordMatchesWithLastThreePasswords() throws Exception {
-        User user = new User("test-user", "Password@12",new Role("Admin"));
+        User user = new User("test-user", "Password@12", new Role("Admin"));
+        user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         userRepository.save(user);
         List<PasswordHistory> passwords = new ArrayList<>();
         Timestamp instant = Timestamp.from(Instant.now());

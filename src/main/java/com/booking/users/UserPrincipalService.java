@@ -7,10 +7,10 @@ import com.booking.users.repository.User;
 import com.booking.users.repository.UserRepository;
 import com.booking.users.view.ChangePasswordRequest;
 import com.booking.users.view.UserPrincipal;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -21,11 +21,12 @@ import static com.booking.passwordHistory.repository.Constants.THREE;
 public class UserPrincipalService implements UserDetailsService {
     private final UserRepository userRepository;
     private final PasswordHistoryService passwordHistoryService;
+    private BCryptPasswordEncoder bCryptPasswordEncoder;
 
-    @Autowired
-    public UserPrincipalService(UserRepository userRepository, PasswordHistoryService passwordHistoryService) {
+    public UserPrincipalService(UserRepository userRepository, PasswordHistoryService passwordHistoryService, BCryptPasswordEncoder bCryptPasswordEncoder) {
         this.userRepository = userRepository;
         this.passwordHistoryService = passwordHistoryService;
+        this.bCryptPasswordEncoder = bCryptPasswordEncoder;
     }
 
     @Override
@@ -41,7 +42,7 @@ public class UserPrincipalService implements UserDetailsService {
 
     public void changePassword(String username, ChangePasswordRequest changePasswordRequest) throws Exception {
         User user = findUserByUsername(username);
-        if (!user.getPassword().equals(changePasswordRequest.getCurrentPassword()))
+        if (!bCryptPasswordEncoder.matches(changePasswordRequest.getCurrentPassword(), user.getPassword()))
             throw new PasswordMismatchException("Entered current password is not matching with existing password");
 
         List<String> lastThreePasswords = passwordHistoryService.findRecentPasswordsByUserId(user.getId(), THREE);
