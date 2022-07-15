@@ -9,6 +9,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
+
 import java.sql.Timestamp;
 import java.time.Instant;
 import java.util.ArrayList;
@@ -31,7 +32,8 @@ public class PasswordHistoryRepositoryTest {
 
     @BeforeEach
     public void beforeEach() {
-        user = new User("test-user", "Password1", new Role("Admin"));
+
+        user = new User("test-user", "Password1", new Role(1L,"Admin"));
         userRepository.save(user);
     }
 

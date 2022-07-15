@@ -32,7 +32,7 @@ public class CustomerServiceTest {
     @Test
 
     public void should_save_customer() throws UsernameAlreadyExistsException {
-        User user = new User("test-user", "foobar", new Role("Customer"));
+        User user = new User("test-user", "foobar", new Role(2L,"Customer"));
         Customer customer = new Customer("test-name", "Axyz@gmail.com", "1234567890", user);
         when(customerRepository.save(customer)).thenReturn(customer);
 
@@ -45,7 +45,7 @@ public class CustomerServiceTest {
 
     @Test
     public void should_save_customer_credentials_in_user() throws UsernameAlreadyExistsException {
-        User user = new User("test-user","foobar",new Role("Customer"));
+        User user = new User("test-user","foobar",new Role(2L,"Customer"));
         Customer customer = new Customer("test-name", "Axyz@gmail.com", "1234567890", user);
         when(userRepository.save(user)).thenReturn(user);
 
@@ -57,10 +57,10 @@ public class CustomerServiceTest {
 
     @Test
     public void should_not_save_customer_when_username_already_exists() throws UsernameAlreadyExistsException {
-        User user1 = new User("test-user","foobar", new Role("Customer"));
+        User user1 = new User("test-user","foobar", new Role(2L,"Customer"));
         Customer customer1 = new Customer("test-name", "Axyz@gmail.com", "1234567890", user1);
         customerService.signup(customer1);
-        User user2 = new User("test-user","foobar", new Role("Customer"));
+        User user2 = new User("test-user","foobar", new Role(2L,"Customer"));
         Customer customer2 = new Customer("test-name", "Axyz@gmail.com", "1234567890", user2);
         when(userRepository.findByUsername(customer2.getUser().getUsername())).thenReturn(Optional.of(user1));
 

@@ -5,6 +5,7 @@ import com.booking.passwordHistory.repository.PasswordHistory;
 import com.booking.passwordHistory.repository.PasswordHistoryPK;
 import com.booking.passwordHistory.repository.PasswordHistoryRepository;
 import com.booking.roles.repository.Role;
+import com.booking.roles.repository.RoleRepository;
 import com.booking.users.repository.User;
 import com.booking.users.repository.UserRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -62,9 +63,11 @@ class UserControllerIntegrationTest {
 
     @Test
     public void shouldLoginSuccessfully() throws Exception {
-        User user = new User("test-user", "Password@12", new Role("Admin"));
+
+        User user = new User("test-user", "Password@12", new Role(1L,"Admin"));
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         userRepository.save(user);
+
         mockMvc.perform(get("/login")
                         .with(httpBasic("test-user", "Password@12")))
                 .andExpect(status().isOk());
@@ -78,9 +81,11 @@ class UserControllerIntegrationTest {
 
     @Test
     void shouldBeAbleToUpdateThePasswordSuccessfully() throws Exception {
-        User user = new User("test-user", "Password@12", new Role("Admin"));
+
+        User user = new User("test-user", "Password@12", new Role(1L,"Admin"));
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         userRepository.save(user);
+
         ChangePasswordRequest changePasswordRequest = new ChangePasswordRequest("Password@12", "New@password12");
         String changePasswordRequestBodyJson = objectMapper.writeValueAsString(changePasswordRequest);
 
@@ -93,9 +98,11 @@ class UserControllerIntegrationTest {
 
     @Test
     void shouldNotBeAbleToUpdateThePasswordWhenValidationFails() throws Exception {
-        User user = new User("test-user", "Password@12", new Role("Admin"));
+
+        User user = new User("test-user", "Password@12", new Role(1L,"Admin"));
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         userRepository.save(user);
+
         ChangePasswordRequest changePasswordRequest = new ChangePasswordRequest("Password@12", "New");
         String changePasswordRequestBodyJson = objectMapper.writeValueAsString(changePasswordRequest);
 
@@ -108,9 +115,11 @@ class UserControllerIntegrationTest {
 
     @Test
     void shouldNotBeAbleToUpdateThePasswordWhenProvidedPasswordMisMatchExistingPassword() throws Exception {
-        User user = new User("test-user", "Password@12", new Role("Admin"));
+
+        User user = new User("test-user", "Password@12", new Role(1L,"Admin"));
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         userRepository.save(user);
+
         ChangePasswordRequest changePasswordRequest = new ChangePasswordRequest("WrongPass@12", "NewPass@12");
         String changePasswordRequestBodyJson = objectMapper.writeValueAsString(changePasswordRequest);
 
@@ -125,8 +134,10 @@ class UserControllerIntegrationTest {
 
     @Test
     void shouldNotBeAbleToUpdateThePasswordWhenProvidedNewPasswordMatchesWithLastThreePasswords() throws Exception {
-        User user = new User("test-user", "Password@12", new Role("Admin"));
+
+        User user = new User("test-user", "Password@12", new Role(1L,"Admin"));
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+
         userRepository.save(user);
         List<PasswordHistory> passwords = new ArrayList<>();
         Timestamp instant = Timestamp.from(Instant.now());

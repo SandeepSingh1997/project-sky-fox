@@ -29,7 +29,9 @@ public class PasswordHistoryTest {
 
     @Test
     void shouldNotReturnAnyViolations() {
-        User user = new User("test-user", "Password@123", new Role("Admin"));
+
+        User user = new User("test-user", "Password@123", new Role(1L,"Admin"));
+
         Timestamp instant = Timestamp.from(Instant.now());
         PasswordHistory passwordHistory = new PasswordHistory(new PasswordHistoryPK(user, "Password@123"), instant);
 
@@ -64,7 +66,9 @@ public class PasswordHistoryTest {
 
     @Test
     void shouldNotAllowInvalidPassword() {
-        User user = new User("test-user", "Password@123", new Role("Admin"));
+
+        User user = new User("test-user", "Password@123", new Role(1L,"Admin"));
+
         PasswordHistoryPK passwordHistoryPK = new PasswordHistoryPK(user, "new");
 
         Set<ConstraintViolation<PasswordHistoryPK>> validate = validator.validate(passwordHistoryPK);

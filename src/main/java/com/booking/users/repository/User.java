@@ -6,6 +6,7 @@ import io.swagger.annotations.ApiModelProperty;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "usertable")
@@ -26,7 +27,8 @@ public class User {
     @ApiModelProperty(name = "password", value = "Password of the user", required = true, example = "password", position = 2)
     private String password;
 
-    @ManyToOne(cascade = {CascadeType.ALL})
+
+    @ManyToOne
     @JoinColumn(name = "role_id")
     private Role role;
 

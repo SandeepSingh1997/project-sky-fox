@@ -9,16 +9,21 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
+
 @Configuration
 public class DataSeeder {
+
 
     @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
 
+
     @Bean
     CommandLineRunner initDatabase(UserRepository repository) {
+
         return args -> {
             if (repository.findByUsername("seed-user-1").isEmpty()) {
+
                 User user = new User("seed-user-1", "Foobar@123", new Role("Admin"));
                 user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
                 repository.save(user);
@@ -32,6 +37,7 @@ public class DataSeeder {
                 User user = new User("seed-user-3", "Foobar@125", new Role("Admin"));
                 user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
                 repository.save(user);
+
             }
         };
     }

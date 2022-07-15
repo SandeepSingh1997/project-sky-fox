@@ -37,14 +37,17 @@ public class PasswordHistoryServiceTest {
         passwordHistoryRepository = mock(PasswordHistoryRepository.class);
         userRepository = mock(UserRepository.class);
         passwordHistoryService = new PasswordHistoryService(passwordHistoryRepository, userRepository);
-        user = new User("test-user", "Password@123", new Role("Admin"));
+        user = new User("test-user", "Password@123", new Role(1L,"Admin"));
+
         Timestamp instant = Timestamp.from(Instant.now());
         passwordHistory = new PasswordHistory(new PasswordHistoryPK(user, "Password@12"), instant);
     }
 
     @Test
     void shouldBeAbleReturnRecentPasswords() {
-        User user = new User("test-user", "Password@123", new Role("Admin"));
+
+        User user = new User("test-user", "Password@123", new Role(1L,"Admin"));
+
         List<String> passwords = new ArrayList<>();
         passwords.add("Password@1");
         passwords.add("Password@2");
@@ -71,7 +74,9 @@ public class PasswordHistoryServiceTest {
 
     @Test
     void shouldBeAbleToThrowWhenInvalidUserIdGiven() {
-        User user = new User("test-user", "Password@123", new Role("Admin"));
+
+        User user = new User("test-user", "Password@123", new Role(1L,"Admin"));
+
         when(userRepository.findById(user.getId())).thenThrow(new UsernameNotFoundException("User is not found"));
 
         assertThrows(UsernameNotFoundException.class,

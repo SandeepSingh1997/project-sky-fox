@@ -11,17 +11,5 @@ fileignoreconfig:
   checksum: b6a5fca8773221fc1ad9f390884c77a332a7b5d0c28a002adcce199209279ef1
 - filename: src/test/java/com/booking/users/UserPrincipalServiceTest.java
   checksum: 588150c26accb8bfe78ce55af47de354999bc476be303e66c0d7f67e995e41c9
-- filename: src/main/java/com/booking/users/UserPrincipalService.java
-  checksum: e452520ecd6c6a90c442251d87e11a16849cfc1a706193e008134443539ff9cd
-- filename: src/main/resources/db/migration/V1.14__CreateRolesTable.sql
-  checksum: b98fb95094940bc0721755fb39da8d0864e9e992765804a0dbb528adeff675a2
-- filename: src/main/resources/db/migration/V1.15__AlterUserTable.sql
-  checksum: d7a522df915f8c963103bd92c2e992378f4af2ccbdb9040f2de48939993d8a5c
-- filename: src/test/java/com/booking/customer/CustomerControllerIntegrationTest.java
-  checksum: 3a685774af8367eaa8dac1a088169f3f0805ad2d9ab29204019b981ceaada103
-- filename: src/main/java/db/migration/V1_16__UpdateUsertableSetPlainTextPasswordToHashedPassword.java
-  checksum: d2943663b0a7776f17831910ae516c62216f128cb73e8fa5e659fa0e63af68a3
-- filename: src/main/java/db/migration/V1_17__UpdatePasswordHistoryTableSetPlainTextPasswordToHashedPassword.java
-  checksum: d422d1af0e9d7d568e782b9f527e73f1b2906c91f8489adb6be01bcf284e3124
 
 version: ""

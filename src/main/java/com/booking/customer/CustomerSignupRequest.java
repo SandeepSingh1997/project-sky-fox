@@ -58,6 +58,6 @@ public class CustomerSignupRequest {
     }
 
     public Customer getCustomer() {
-        return new Customer(this.name, this.email, this.phoneNumber, new User(this.username, this.password, new Role("Customer")));
+        return new Customer(this.name, this.email, this.phoneNumber, new User(this.username, this.password, new Role(2L,"Customer")));
     }
 }

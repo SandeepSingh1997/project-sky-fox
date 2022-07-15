@@ -23,7 +23,7 @@ class RoleTest {
     @Test
     void shouldReturnNoViolation() {
 
-        Role admin = new Role("Admin");
+        Role admin = new Role(1L,"Admin");
 
         final Set<ConstraintViolation<Role>> violations = validator.validate(admin);
 
@@ -34,7 +34,7 @@ class RoleTest {
 
     @Test
     void shouldReturnViolationIfRoleIsNotDefined() {
-        Role role = new Role(null);
+        Role role = new Role(1L,null);
         final Set<ConstraintViolation<Role>> violations = validator.validate(role);
 
         assertFalse(violations.isEmpty());
