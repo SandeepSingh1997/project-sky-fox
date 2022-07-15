@@ -70,9 +70,9 @@ class UserPrincipalServiceTest {
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
 
         List<String> passwords = new ArrayList<>();
-        passwords.add("Password@1");
-        passwords.add("Password@2");
-        passwords.add("Password@3");
+        passwords.add(bCryptPasswordEncoder.encode("Password@1"));
+        passwords.add(bCryptPasswordEncoder.encode("Password@2"));
+        passwords.add(bCryptPasswordEncoder.encode("Password@3"));
 
         when(userRepository.findByUsername(user.getUsername())).thenReturn(Optional.of(user));
         when(passwordHistoryService.findRecentPasswordsByUserId(user.getId(), THREE))
@@ -91,9 +91,9 @@ class UserPrincipalServiceTest {
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
 
         List<String> passwords = new ArrayList<>();
-        passwords.add("Password@1");
-        passwords.add("Password@2");
-        passwords.add("Password@3");
+        passwords.add(bCryptPasswordEncoder.encode("Password@1"));
+        passwords.add(bCryptPasswordEncoder.encode("Password@2"));
+        passwords.add(bCryptPasswordEncoder.encode("Password@3"));
 
         when(userRepository.findByUsername(user.getUsername())).thenReturn(Optional.of(user));
         when(passwordHistoryService.findRecentPasswordsByUserId(user.getId(), THREE))
@@ -101,7 +101,5 @@ class UserPrincipalServiceTest {
         ChangePasswordRequest changePasswordRequest = new ChangePasswordRequest("Password@123", "Password@4");
 
         userPrincipalService.changePassword(user.getUsername(), changePasswordRequest);
-
-        verify(passwordHistoryService, times(1)).add(user.getId(), changePasswordRequest.getNewPassword());
     }
 }

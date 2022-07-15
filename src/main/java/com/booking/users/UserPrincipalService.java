@@ -47,13 +47,14 @@ public class UserPrincipalService implements UserDetailsService {
 
         List<String> lastThreePasswords = passwordHistoryService.findRecentPasswordsByUserId(user.getId(), THREE);
         for (String password : lastThreePasswords) {
-            if (password.equals(changePasswordRequest.getNewPassword()))
+            if (bCryptPasswordEncoder.matches(changePasswordRequest.getNewPassword(), password))
                 throw new PasswordMatchesWithLastThreePasswordsException("Entered new password matches with recent three passwords");
         }
 
-        passwordHistoryService.add(user.getId(), changePasswordRequest.getNewPassword());
+        String hashedNewPassword = bCryptPasswordEncoder.encode(changePasswordRequest.getNewPassword());
+        passwordHistoryService.add(user.getId(), hashedNewPassword);
 
-        user.setPassword(changePasswordRequest.getNewPassword());
+        user.setPassword(hashedNewPassword);
         userRepository.save(user);
     }
 }

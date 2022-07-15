@@ -17,7 +17,6 @@ import java.util.List;
 public class PasswordHistoryService {
 
     private PasswordHistoryRepository passwordHistoryRepository;
-
     private UserRepository userRepository;
 
     public PasswordHistoryService(PasswordHistoryRepository passwordHistoryRepository, UserRepository userRepository) {

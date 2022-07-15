@@ -24,11 +24,8 @@ import static org.mockito.Mockito.*;
 public class PasswordHistoryServiceTest {
 
     private PasswordHistoryRepository passwordHistoryRepository;
-
     private UserRepository userRepository;
-
     private PasswordHistoryService passwordHistoryService;
-
     private User user;
     private PasswordHistory passwordHistory;
 

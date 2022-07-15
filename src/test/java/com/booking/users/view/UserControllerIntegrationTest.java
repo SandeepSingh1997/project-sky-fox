@@ -141,11 +141,11 @@ class UserControllerIntegrationTest {
         userRepository.save(user);
         List<PasswordHistory> passwords = new ArrayList<>();
         Timestamp instant = Timestamp.from(Instant.now());
-        passwords.add(new PasswordHistory(new PasswordHistoryPK(user, "Password@1"), instant));
+        passwords.add(new PasswordHistory(new PasswordHistoryPK(user, bCryptPasswordEncoder.encode("Password@1")), instant));
         instant = Timestamp.valueOf(instant.toLocalDateTime().plusDays(1));
-        passwords.add(new PasswordHistory(new PasswordHistoryPK(user, "Password@2"), instant));
+        passwords.add(new PasswordHistory(new PasswordHistoryPK(user, bCryptPasswordEncoder.encode("Password@2")), instant));
         instant = Timestamp.valueOf(instant.toLocalDateTime().plusDays(1));
-        passwords.add(new PasswordHistory(new PasswordHistoryPK(user, "Password@3"), instant));
+        passwords.add(new PasswordHistory(new PasswordHistoryPK(user, bCryptPasswordEncoder.encode("Password@3")), instant));
         passwordHistoryRepository.saveAll(passwords);
 
         ChangePasswordRequest changePasswordRequest = new ChangePasswordRequest("Password@12", "Password@2");

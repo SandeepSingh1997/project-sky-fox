@@ -61,5 +61,6 @@ public class PasswordHistoryRepositoryTest {
         List<String> recentPasswords = passwordHistoryRepository.findRecentPasswordsByUserIdWithLimit(user.getId(), THREE.getValue());
 
         assertEquals(3, recentPasswords.size());
+        assertEquals(recentPasswords.get(2), passwords.get(2).getPasswordHistoryPK().getPassword());
     }
 }
