@@ -24,11 +24,8 @@ class UserPrincipalServiceTest {
     private UserRepository userRepository;
     private UserPrincipalService userPrincipalService;
     private PasswordHistoryService passwordHistoryService;
-<<<<<<< HEAD
     private BCryptPasswordEncoder bCryptPasswordEncoder;
-=======
-    private Role admin;
->>>>>>> 2ab321f ([Sandeep | Varshni] Refactor. Fix issues related to roles.)
+
 
     @BeforeEach
     void setup() {
@@ -41,14 +38,10 @@ class UserPrincipalServiceTest {
     @Test
     void shouldBeAbleToChangePasswordInRepository() throws Exception {
         ChangePasswordRequest changePasswordRequest = new ChangePasswordRequest("Old@Password1", "New@Password1");
-<<<<<<< HEAD
-        User user = new User("username", "Old@Password1", new Role("Admin"));
+
+        User user = new User("username", "Old@Password1", new Role(1L,"Admin"));
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
-=======
 
-        User user = new User("username", changePasswordRequest.getCurrentPassword(),new Role(1L,"Admin"));
-
->>>>>>> 2ab321f ([Sandeep | Varshni] Refactor. Fix issues related to roles.)
         when(userRepository.findByUsername(user.getUsername())).thenReturn(Optional.of(user));
 
         userPrincipalService.changePassword(user.getUsername(), changePasswordRequest);
@@ -59,15 +52,10 @@ class UserPrincipalServiceTest {
     @Test
     void shouldReturnExceptionWhenReceivedCurrentPasswordDoesNotMatchTheCurrentPasswordInTheRepository() {
         ChangePasswordRequest changePasswordRequest = new ChangePasswordRequest("Old@Password1", "New@Password1");
-<<<<<<< HEAD
-        User user = new User("username", "differentCurrent@Password", new Role("Admin"));
+
+        User user = new User("username", "differentCurrent@Password", new Role(1L,"Admin"));
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
-=======
 
-        User user = new User("username", "differentCurrent@Password",new Role(1L,"Admin"));
-
-
->>>>>>> 2ab321f ([Sandeep | Varshni] Refactor. Fix issues related to roles.)
         when(userRepository.findByUsername(user.getUsername())).thenReturn(Optional.of(user));
 
         assertThrows(PasswordMismatchException.class, () -> {
@@ -77,14 +65,10 @@ class UserPrincipalServiceTest {
 
     @Test
     void shouldNotBeAbleToChangePasswordWhenNewPasswordMatchesWithAnyOneOfPreviousThreePasswords() throws PasswordMismatchException {
-<<<<<<< HEAD
-        User user = new User("test-user", "Password@123", new Role("Admin"));
+
+        User user = new User("test-user", "Password@123", new Role(1L,"Admin"));
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
-=======
 
-        User user = new User("test-user", "Password@123",new Role(1L,"Admin"));
-
->>>>>>> 2ab321f ([Sandeep | Varshni] Refactor. Fix issues related to roles.)
         List<String> passwords = new ArrayList<>();
         passwords.add("Password@1");
         passwords.add("Password@2");
@@ -102,14 +86,10 @@ class UserPrincipalServiceTest {
 
     @Test
     void shouldBeAbleToSaveNewPasswordInPasswordHistoryTableWhenItDoesNotMatchesWithLastThreePasswords() throws Exception {
-<<<<<<< HEAD
-        User user = new User("test-user", "Password@123", new Role("Admin"));
+
+        User user = new User("test-user", "Password@123", new Role(1L,"Admin"));
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
-=======
 
-        User user = new User("test-user", "Password@123",new Role(1L,"Admin"));
-
->>>>>>> 2ab321f ([Sandeep | Varshni] Refactor. Fix issues related to roles.)
         List<String> passwords = new ArrayList<>();
         passwords.add("Password@1");
         passwords.add("Password@2");
