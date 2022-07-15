@@ -19,4 +19,7 @@ fileignoreconfig:
   checksum: d7a522df915f8c963103bd92c2e992378f4af2ccbdb9040f2de48939993d8a5c
 - filename: src/test/java/com/booking/customer/CustomerControllerIntegrationTest.java
   checksum: 3a685774af8367eaa8dac1a088169f3f0805ad2d9ab29204019b981ceaada103
+- filename: src/main/java/db/migration/V1_16__UpdateUsertableSetPlainTextPasswordToHashedPassword.java
+  checksum: d2943663b0a7776f17831910ae516c62216f128cb73e8fa5e659fa0e63af68a3
+
 version: ""
