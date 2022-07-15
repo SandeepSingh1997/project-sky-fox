@@ -21,5 +21,7 @@ fileignoreconfig:
   checksum: 3a685774af8367eaa8dac1a088169f3f0805ad2d9ab29204019b981ceaada103
 - filename: src/main/java/db/migration/V1_16__UpdateUsertableSetPlainTextPasswordToHashedPassword.java
   checksum: d2943663b0a7776f17831910ae516c62216f128cb73e8fa5e659fa0e63af68a3
+- filename: src/main/java/db/migration/V1_17__UpdatePasswordHistoryTableSetPlainTextPasswordToHashedPassword.java
+  checksum: d422d1af0e9d7d568e782b9f527e73f1b2906c91f8489adb6be01bcf284e3124
 
 version: ""
