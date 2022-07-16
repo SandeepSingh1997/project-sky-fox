@@ -16,6 +16,7 @@ import java.util.List;
 import java.util.Optional;
 
 import static com.booking.passwordHistory.repository.Constants.THREE;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.*;
 
@@ -101,5 +102,16 @@ class UserPrincipalServiceTest {
         ChangePasswordRequest changePasswordRequest = new ChangePasswordRequest("Password@123", "Password@4");
 
         userPrincipalService.changePassword(user.getUsername(), changePasswordRequest);
+    }
+
+    @Test
+    void shouldBeAbleToGetUserRoleBasedOnUserName() {
+        User user = new User("test-user", "Password@123", new Role(2L,"Customer"));
+        user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+        when(userRepository.findByUsername(user.getUsername())).thenReturn(Optional.of(user));
+
+        String role=userPrincipalService.getUserRoleName(user.getUsername());
+        assertEquals("Customer",role);
+
     }
 }

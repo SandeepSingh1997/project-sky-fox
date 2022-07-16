@@ -31,6 +31,8 @@ public class UserController {
         String username = principal.getName();
         Map<String, Object> userDetails = new HashMap<>();
         userDetails.put("username", username);
+        String userRole=userPrincipalService.getUserRoleName(username);
+        userDetails.put("role", userRole);
         return userDetails;
     }
 

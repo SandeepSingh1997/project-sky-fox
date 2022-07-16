@@ -78,4 +78,8 @@ public class UserPrincipalService implements UserDetailsService {
         return bCryptPasswordEncoder.matches(changePasswordRequest, user);
     }
 
+
+    public String getUserRoleName(String username) {
+        return findUserByUsername(username).getRole().getName();
+    }
 }
