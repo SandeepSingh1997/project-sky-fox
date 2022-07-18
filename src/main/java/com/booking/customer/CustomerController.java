@@ -1,6 +1,8 @@
 package com.booking.customer;
 
 import com.booking.bookings.BookingService;
+import com.booking.config.featureTogglz.FeatureAssociation;
+import com.booking.config.featureTogglz.FeatureOptions;
 import com.booking.exceptions.UsernameAlreadyExistsException;
 import com.booking.handlers.models.ErrorResponse;
 import io.swagger.annotations.Api;
@@ -26,6 +28,7 @@ public class CustomerController {
         this.customerService = customerService;
     }
 
+    @FeatureAssociation(value = FeatureOptions.CUSTOMER_SIGNUP_FEATURE)
     @PostMapping()
     @ApiOperation(value = "signup a customer")
     @ResponseStatus(code = HttpStatus.CREATED)

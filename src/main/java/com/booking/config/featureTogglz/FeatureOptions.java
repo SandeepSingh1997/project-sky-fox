@@ -13,7 +13,11 @@ public enum FeatureOptions implements  Feature {
 
     @EnabledByDefault
     @Label("Change password for admin feature")
-    CHANGE_PASSWORD_FOR_ADMIN_FEATURE;
+    CHANGE_PASSWORD_FOR_ADMIN_FEATURE,
+
+    @EnabledByDefault
+    @Label("Customer signup feature")
+    CUSTOMER_SIGNUP_FEATURE;
 
     public boolean isActive() {
         return FeatureContext.getFeatureManager().isActive(this);
