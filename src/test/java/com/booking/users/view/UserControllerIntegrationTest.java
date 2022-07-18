@@ -51,8 +51,8 @@ class UserControllerIntegrationTest {
 
     @BeforeEach
     public void before() {
-        userRepository.deleteAll();
         passwordHistoryRepository.deleteAll();
+        userRepository.deleteAll();
     }
 
     @AfterEach

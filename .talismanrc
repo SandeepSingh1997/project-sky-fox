@@ -15,4 +15,6 @@ fileignoreconfig:
   checksum: 8dda43dcdfb16fec4fd9d7311358732aea68a12119e108c436db0cafec0a4998
 - filename: src/test/java/com/booking/customer/CustomerControllerIntegrationTest.java
   checksum: 930595d69ad60ba2413d734d8c2cd013cbcf2e9697d746d528c45aa6ca373820
+- filename: src/main/java/com/booking/DataSeeder.java
+  checksum: e97c9faa7fe7644b15a5c00f59710f6606c5a638610a7169164cf6957f04183c
 version: ""
