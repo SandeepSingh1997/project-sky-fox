@@ -34,7 +34,18 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.cors().and().authorizeRequests().antMatchers(HttpMethod.OPTIONS, "/**").permitAll().antMatchers(HttpMethod.GET, "/version").permitAll().anyRequest().authenticated().and().httpBasic().and().csrf().disable();
+
+        http.cors()
+                .and()
+                .authorizeRequests()
+                .antMatchers(HttpMethod.OPTIONS, "/**").permitAll()
+                .antMatchers(HttpMethod.GET, "/version").permitAll()
+                .antMatchers(HttpMethod.POST, "/customers").permitAll()
+                .anyRequest().authenticated()
+                .and()
+                .httpBasic()
+                .and()
+                .csrf().disable();
     }
 
     @Bean
