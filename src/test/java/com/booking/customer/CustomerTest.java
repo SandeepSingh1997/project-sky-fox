@@ -19,11 +19,14 @@ public class CustomerTest {
     private Validator validator;
 
     private User user;
+    private Role admin;
 
     @BeforeEach
     public void beforeEach() {
         validator = Validation.buildDefaultValidatorFactory().getValidator();
-        user = new User("seed-user-1", "foobar", new Role("Admin"));
+
+        user = new User("seed-user-1", "foobar", new Role(1L,"Admin"));
+
     }
 
     @Test

@@ -18,16 +18,13 @@ import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-@Ignore
+
 @DataJpaTest
 public class UserTest {
 
     private Role role;
 
     private Validator validator;
-
-    @Autowired
-    private RoleRepository roleRepository;
 
     @Autowired
     private UserRepository userRepository;
@@ -37,23 +34,18 @@ public class UserTest {
     @BeforeEach
     void setUp() {
         userRepository.deleteAll();
-        roleRepository.deleteAll();
         validator = Validation.buildDefaultValidatorFactory().getValidator();
-        role = new Role("Admin");
-        Role save = roleRepository.save(role);
-        System.out.println(save);
 
     }
 
     @AfterEach
     void tearDown() {
         userRepository.deleteAll();
-        roleRepository.deleteAll();
     }
 
     @Test
     void shouldCreateAUserWithUserRole() {
-        User user = new User("seed-user-4","Password@123",role);
+        User user = new User("seed-user-4","Password@123",new Role(1L,"Admin"));
         userRepository.save(user);
 
         final Set<ConstraintViolation<User>> violations = validator.validate(user);
