@@ -14,7 +14,6 @@ logging:
 application:
   uiHost: http://localhost:3000
   movieServiceHost: http://ec2-3-109-212-163.ap-south-1.compute.amazonaws.com:4567/
-
 togglz:
   console:
     enabled: true
