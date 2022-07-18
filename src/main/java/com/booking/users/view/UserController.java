@@ -1,5 +1,7 @@
 package com.booking.users.view;
 
+import com.booking.config.featureTogglz.FeatureAssociation;
+import com.booking.config.featureTogglz.FeatureOptions;
 import com.booking.users.UserPrincipalService;
 import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,6 +38,7 @@ public class UserController {
         return userDetails;
     }
 
+    @FeatureAssociation(value = FeatureOptions.CHANGE_PASSWORD_FOR_ADMIN_FEATURE)
     @PutMapping("/password")
     public ResponseEntity<Object> changePassword(Principal principal, @Valid @RequestBody ChangePasswordRequest changePasswordRequest) throws Exception {
         userPrincipalService.changePassword(principal.getName(), changePasswordRequest);

@@ -9,7 +9,11 @@ public enum FeatureOptions implements  Feature {
 
     @EnabledByDefault
     @Label("Show IMDb rating for movie feature")
-    SHOW_IMDB_RATING_FOR_MOVIE_FEATURE;
+    SHOW_IMDB_RATING_FOR_MOVIE_FEATURE,
+
+    @EnabledByDefault
+    @Label("Change password for admin feature")
+    CHANGE_PASSWORD_FOR_ADMIN_FEATURE;
 
     public boolean isActive() {
         return FeatureContext.getFeatureManager().isActive(this);
