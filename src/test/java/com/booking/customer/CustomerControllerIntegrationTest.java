@@ -4,6 +4,9 @@ import com.booking.App;
 
 import com.booking.movieGateway.exceptions.FormatException;
 
+import com.booking.passwordHistory.PasswordHistoryService;
+import com.booking.passwordHistory.repository.PasswordHistoryRepository;
+import com.booking.users.UserPrincipalService;
 import com.booking.users.repository.UserRepository;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -41,15 +44,22 @@ public class CustomerControllerIntegrationTest {
     @Autowired
     private UserRepository userRepository;
 
+    @Autowired
+    private PasswordHistoryRepository passwordHistoryRepository;
+
+
 
     @BeforeEach
     public void beforeEach() throws IOException, FormatException {
+        passwordHistoryRepository.deleteAll();
         customerRepository.deleteAll();
         userRepository.deleteAll();
+
     }
 
     @AfterEach
     public void afterEach() {
+        passwordHistoryRepository.deleteAll();
         customerRepository.deleteAll();
         userRepository.deleteAll();
     }
@@ -60,8 +70,8 @@ public class CustomerControllerIntegrationTest {
                 "\"name\": \"test-user1\"," +
                 "\"email\": \"Example@email.com\"," +
                 "\"phoneNumber\": \"9898989898\"," +
-                "\"username\": \"test-username1\"," +
-                "\"password\": \"password1\"" +
+                "\"username\": \"test-username167\"," +
+                "\"password\": \"Password@1\"" +
                 "}";
 
 
@@ -82,7 +92,7 @@ public class CustomerControllerIntegrationTest {
                 "\"email\": \"Example@email.com\"," +
                 "\"phoneNumber\": \"9898989898\"," +
                 "\"username\": \"test-username1\"," +
-                "\"password\": \"password1\"" +
+                "\"password\": \"Password@1\"" +
                 "}";
 
 

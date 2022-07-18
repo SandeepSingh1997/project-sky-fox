@@ -3,6 +3,7 @@ package com.booking.customer;
 
 import com.booking.exceptions.UsernameAlreadyExistsException;
 import com.booking.roles.repository.Role;
+import com.booking.users.UserPrincipalService;
 import com.booking.users.repository.User;
 import com.booking.users.repository.UserRepository;
 import org.junit.jupiter.api.BeforeEach;
@@ -19,14 +20,14 @@ import static org.mockito.Mockito.*;
 public class CustomerServiceTest {
 
     private CustomerRepository customerRepository;
-    private UserRepository userRepository;
+    private UserPrincipalService userPrincipalService;
     private CustomerService customerService;
 
     @BeforeEach
     public void beforeEach() {
         customerRepository = mock(CustomerRepository.class);
-        userRepository = mock(UserRepository.class);
-        customerService = new CustomerService(customerRepository, userRepository);
+        userPrincipalService = mock(UserPrincipalService.class);
+        customerService = new CustomerService(customerRepository, userPrincipalService);
     }
 
     @Test
@@ -47,11 +48,11 @@ public class CustomerServiceTest {
     public void should_save_customer_credentials_in_user() throws UsernameAlreadyExistsException {
         User user = new User("test-user","foobar",new Role(2L,"Customer"));
         Customer customer = new Customer("test-name", "Axyz@gmail.com", "1234567890", user);
-        when(userRepository.save(user)).thenReturn(user);
+        when(userPrincipalService.add(user)).thenReturn(user);
 
         customerService.signup(customer);
 
-        verify(userRepository).save(user);
+        verify(userPrincipalService).add(user);
 
     }
 
@@ -62,7 +63,7 @@ public class CustomerServiceTest {
         customerService.signup(customer1);
         User user2 = new User("test-user","foobar", new Role(2L,"Customer"));
         Customer customer2 = new Customer("test-name", "Axyz@gmail.com", "1234567890", user2);
-        when(userRepository.findByUsername(customer2.getUser().getUsername())).thenReturn(Optional.of(user1));
+        when(userPrincipalService.add(customer2.getUser())).thenThrow(new UsernameAlreadyExistsException());
 
         assertThrows(UsernameAlreadyExistsException.class, ()->{
             customerService.signup(customer2);

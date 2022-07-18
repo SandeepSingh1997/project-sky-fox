@@ -36,5 +36,6 @@ public class PasswordHistoryService {
         Timestamp createdAt = Timestamp.from(Instant.now());
         PasswordHistory passwordHistory = new PasswordHistory(passwordHistoryPK, createdAt);
         return passwordHistoryRepository.save(passwordHistory);
+
     }
 }

@@ -12,5 +12,7 @@ fileignoreconfig:
 - filename: src/test/java/com/booking/users/UserPrincipalServiceTest.java
   checksum: 588150c26accb8bfe78ce55af47de354999bc476be303e66c0d7f67e995e41c9
 - filename: src/main/java/com/booking/users/UserPrincipalService.java
-  checksum: dc2d789c3c159adab21dbefb63dae6ac024ea74d9199c94759cb32f310d30b56
+  checksum: 8dda43dcdfb16fec4fd9d7311358732aea68a12119e108c436db0cafec0a4998
+- filename: src/test/java/com/booking/customer/CustomerControllerIntegrationTest.java
+  checksum: 930595d69ad60ba2413d734d8c2cd013cbcf2e9697d746d528c45aa6ca373820
 version: ""
