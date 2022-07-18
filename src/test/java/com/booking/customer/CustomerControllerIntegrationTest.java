@@ -4,7 +4,7 @@ import com.booking.App;
 
 import com.booking.movieGateway.exceptions.FormatException;
 
-import com.booking.passwordHistory.PasswordHistoryService;
+
 import com.booking.passwordHistory.repository.PasswordHistoryRepository;
 import com.booking.users.UserPrincipalService;
 import com.booking.users.repository.UserRepository;

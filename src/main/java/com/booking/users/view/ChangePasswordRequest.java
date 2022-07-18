@@ -9,12 +9,12 @@ public class ChangePasswordRequest {
 
     @JsonProperty
     @NotBlank(message = "Current password must be provided")
-    @Pattern(regexp = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[-@#$%^&+=])(?=\\S+$).{8,16}$", message = "Current password must contain atleast one Capital Letter, one Special character, one Digit, Minimum of 8 and Maximum of 16 characters")
+    @Pattern(regexp = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[-@#~$%^&+=/`(){|}\\[\\],.<>?!*;:_'\"/\\\\])(?=\\S+$).{8,16}$", message = "Current password must contain atleast one Capital Letter, one Special character, one Digit, Minimum of 8 and Maximum of 16 characters")
     private String currentPassword;
 
     @JsonProperty
     @NotBlank(message = "New password must be provided")
-    @Pattern(regexp = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[-@#$%^&+=])(?=\\S+$).{8,16}$", message = "New password must contain atleast one Capital Letter, one Special character, one Digit, Minimum of 8 and Maximum of 16 characters")
+    @Pattern(regexp = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[-@#~$%^&+=/`(){|}\\[\\],.<>?!*;:_'\"/\\\\])(?=\\S+$).{8,16}$", message = "New password must contain atleast one Capital Letter, one Special character, one Digit, Minimum of 8 and Maximum of 16 characters")
     private String newPassword;
 
     public ChangePasswordRequest() {

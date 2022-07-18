@@ -62,6 +62,13 @@ dependencies {
     implementation 'com.jcabi:jcabi-manifests:1.1'
     implementation 'org.flywaydb:flyway-core'
 
+    //togglz dependencies
+    implementation 'org.togglz:togglz-spring-boot-starter:3.1.2'
+    implementation 'org.togglz:togglz-spring-security:3.1.2'
+    implementation 'org.togglz:togglz-spring-web:3.1.2'
+    implementation 'org.togglz:togglz-console:3.1.2'
+    implementation 'com.github.heneke.thymeleaf:thymeleaf-extras-togglz:1.0.1.RELEASE'
+
     testImplementation('org.springframework.boot:spring-boot-starter-test') {
         exclude group: "junit", module: "junit"
     }

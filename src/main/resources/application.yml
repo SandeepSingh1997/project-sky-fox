@@ -12,3 +12,9 @@ logging:
 application:
   uiHost: ${UI_HOST}
   movieServiceHost: ${MOVIE_SERVICE_HOST}
+togglz:
+  console:
+    enabled: true
+    path: /togglz-console
+    secured: false
+    use-management-port: false
