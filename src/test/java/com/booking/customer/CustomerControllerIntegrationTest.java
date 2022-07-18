@@ -61,7 +61,7 @@ public class CustomerControllerIntegrationTest {
                 "\"email\": \"Example@email.com\"," +
                 "\"phoneNumber\": \"9898989898\"," +
                 "\"username\": \"test-username1\"," +
-                "\"password\": \"password1\"" +
+                "\"password\": \"Password@1\"" +
                 "}";
 
 
@@ -82,7 +82,7 @@ public class CustomerControllerIntegrationTest {
                 "\"email\": \"Example@email.com\"," +
                 "\"phoneNumber\": \"9898989898\"," +
                 "\"username\": \"test-username1\"," +
-                "\"password\": \"password1\"" +
+                "\"password\": \"Password@1\"" +
                 "}";
 
 
