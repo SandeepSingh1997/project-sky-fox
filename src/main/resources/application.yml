@@ -9,6 +9,8 @@ spring:
 logging:
   level:
     root: INFO
+    org:
+      togglz: trace
 application:
   uiHost: ${UI_HOST}
   movieServiceHost: ${MOVIE_SERVICE_HOST}
