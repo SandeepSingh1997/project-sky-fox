@@ -1,7 +1,7 @@
 package com.booking.users;
 
 import com.booking.customer.Customer;
-import com.booking.customer.CustomerService;
+import com.booking.customer.CustomerRepository;
 import com.booking.exceptions.CustomerNotFoundException;
 import com.booking.exceptions.PasswordMatchesWithLastThreePasswordsException;
 import com.booking.exceptions.PasswordMismatchException;
@@ -28,14 +28,14 @@ public class UserPrincipalService implements UserDetailsService {
     private final UserRepository userRepository;
     private final PasswordHistoryService passwordHistoryService;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
-    private CustomerService customerService;
+    private final CustomerRepository customerRepository;
 
     @Autowired
-    public UserPrincipalService(UserRepository userRepository, PasswordHistoryService passwordHistoryService, BCryptPasswordEncoder bCryptPasswordEncoder, CustomerService customerService) {
+    public UserPrincipalService(UserRepository userRepository, PasswordHistoryService passwordHistoryService, BCryptPasswordEncoder bCryptPasswordEncoder, CustomerRepository customerRepository) {
         this.userRepository = userRepository;
         this.passwordHistoryService = passwordHistoryService;
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
-        this.customerService = customerService;
+        this.customerRepository = customerRepository;
     }
 
     @Override
@@ -64,7 +64,7 @@ public class UserPrincipalService implements UserDetailsService {
 
     public UserDetailsResponse getUserDetailsById(Long id) throws CustomerNotFoundException {
         User user = getUserById(id);
-        Customer customer = customerService.getCustomerByUserId(id);
+        Customer customer = getCustomerByUserId(id);
         return new UserDetailsResponse(customer.getName(), user.getUsername(), customer.getEmail(), customer.getPhoneNumber());
     }
 
@@ -92,5 +92,9 @@ public class UserPrincipalService implements UserDetailsService {
 
     private User getUserById(Long id) {
         return userRepository.findById(id).orElseThrow(() -> new UsernameNotFoundException("User not found"));
+    }
+
+    private Customer getCustomerByUserId(Long id) throws CustomerNotFoundException {
+        return customerRepository.findByUserId(id).orElseThrow(() -> new CustomerNotFoundException("Customer not found"));
     }
 }

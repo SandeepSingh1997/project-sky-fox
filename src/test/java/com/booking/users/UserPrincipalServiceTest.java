@@ -1,7 +1,7 @@
 package com.booking.users;
 
 import com.booking.customer.Customer;
-import com.booking.customer.CustomerService;
+import com.booking.customer.CustomerRepository;
 import com.booking.exceptions.CustomerNotFoundException;
 import com.booking.exceptions.PasswordMatchesWithLastThreePasswordsException;
 import com.booking.exceptions.PasswordMismatchException;
@@ -30,16 +30,15 @@ class UserPrincipalServiceTest {
     private UserPrincipalService userPrincipalService;
     private PasswordHistoryService passwordHistoryService;
     private BCryptPasswordEncoder bCryptPasswordEncoder;
-    private CustomerService customerService;
-
+    private CustomerRepository customerRepository;
 
     @BeforeEach
     void setup() {
         userRepository = mock(UserRepository.class);
         passwordHistoryService = mock(PasswordHistoryService.class);
-        customerService = mock(CustomerService.class);
         bCryptPasswordEncoder = new BCryptPasswordEncoder();
-        userPrincipalService = new UserPrincipalService(userRepository, passwordHistoryService, bCryptPasswordEncoder, customerService);
+        customerRepository = mock(CustomerRepository.class);
+        userPrincipalService = new UserPrincipalService(userRepository, passwordHistoryService, bCryptPasswordEncoder, customerRepository);
     }
 
     @Test
@@ -125,7 +124,7 @@ class UserPrincipalServiceTest {
         User user = new User("test-user", "Password@123", new Role(1L, "Admin"));
         Customer customer = new Customer("test-customer", "test@gmail.com", "99999999", user);
         when(userRepository.findById(user.getId())).thenReturn(Optional.of(user));
-        when(customerService.getCustomerByUserId(user.getId())).thenReturn(customer);
+        when(customerRepository.findByUserId(user.getId())).thenReturn(Optional.of(customer));
 
         UserDetailsResponse userDetailsResponse = userPrincipalService.getUserDetailsById(user.getId());
 
@@ -135,6 +134,6 @@ class UserPrincipalServiceTest {
         assertEquals(userDetailsResponse.getMobile(), customer.getPhoneNumber());
 
         verify(userRepository, times(1)).findById(user.getId());
-        verify(customerService, times(1)).getCustomerByUserId(user.getId());
+        verify(customerRepository, times(1)).findByUserId(user.getId());
     }
 }
