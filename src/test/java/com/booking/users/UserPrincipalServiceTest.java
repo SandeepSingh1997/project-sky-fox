@@ -13,6 +13,7 @@ import com.booking.users.view.ChangePasswordRequest;
 import com.booking.users.view.UserDetailsResponse;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import java.util.ArrayList;
@@ -135,5 +136,22 @@ class UserPrincipalServiceTest {
 
         verify(userRepository, times(1)).findById(user.getId());
         verify(customerRepository, times(1)).findByUserId(user.getId());
+    }
+
+    @Test
+    void shouldBeAbleToThrowExceptionWhenUserIsNotFoundWithTheUsername() {
+        User user = new User("test-user", "Password@123", new Role(1L, "Admin"));
+        when(userRepository.findById(user.getId())).thenThrow(new UsernameNotFoundException("User not found"));
+
+        assertThrows(UsernameNotFoundException.class, () -> userPrincipalService.getUserDetailsById(user.getId()));
+    }
+
+    @Test
+    void shouldBeAbleToThrowExceptionWhenCustomerIsNotFoundWithUserId() {
+        User user = new User("test-user", "password", new Role(2L, "Customer"));
+        when(userRepository.findById(user.getId())).thenReturn(Optional.of(user));
+        when(customerRepository.findByUserId(user.getId())).thenReturn(Optional.empty());
+
+        assertThrows(CustomerNotFoundException.class, () -> userPrincipalService.getUserDetailsById(user.getId()));
     }
 }
