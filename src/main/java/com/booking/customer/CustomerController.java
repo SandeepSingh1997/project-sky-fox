@@ -1,8 +1,8 @@
 package com.booking.customer;
 
-import com.booking.bookings.BookingService;
 import com.booking.config.featureTogglz.FeatureAssociation;
 import com.booking.config.featureTogglz.FeatureOptions;
+import com.booking.exceptions.CustomerNotFoundException;
 import com.booking.exceptions.UsernameAlreadyExistsException;
 import com.booking.handlers.models.ErrorResponse;
 import io.swagger.annotations.Api;
@@ -11,7 +11,6 @@ import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -42,4 +41,7 @@ public class CustomerController {
         customerService.signup(customer);
     }
 
+    public Customer getCustomerByUsername(String username) throws CustomerNotFoundException {
+        return customerService.getCustomerByUsername(username);
+    }
 }

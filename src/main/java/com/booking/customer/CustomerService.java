@@ -1,9 +1,10 @@
 package com.booking.customer;
 
+import com.booking.exceptions.CustomerNotFoundException;
 import com.booking.exceptions.UsernameAlreadyExistsException;
 import com.booking.users.UserPrincipalService;
 import com.booking.users.repository.User;
-import com.booking.users.repository.UserRepository;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -22,5 +23,13 @@ public class CustomerService {
     public Customer signup(Customer customer) throws UsernameAlreadyExistsException {
         userPrincipalService.add(customer.getUser());
         return customerRepository.save(customer);
+    }
+
+    public Customer getCustomerByUsername(String username) throws CustomerNotFoundException {
+        User user = userPrincipalService.findUserByUsername(username);
+        return findCustomerByUserId(user.getId());
+    }
+    public Customer findCustomerByUserId(Long userId) throws CustomerNotFoundException {
+        return customerRepository.findByUserId(userId).orElseThrow(() -> new CustomerNotFoundException("Customer not found"));
     }
 }
