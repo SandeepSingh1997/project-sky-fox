@@ -86,13 +86,13 @@ public class CustomExceptionHandler extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler(CustomerNotFoundException.class)
     public ResponseEntity<ErrorResponse> handleCustomerNotFoundException(CustomerNotFoundException ex) {
-        ErrorResponse error = new ErrorResponse("Customer not found with username", singletonList(ex.getMessage()));
+        ErrorResponse error = new ErrorResponse("Customer not found with user id", singletonList(ex.getMessage()));
         return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler(UserIdDoesNotMatchesWithRequestedUserId.class)
     public ResponseEntity<ErrorResponse> handleUserIdDoesNotMatchesWithRequestedUserId(UserIdDoesNotMatchesWithRequestedUserId ex) {
-        ErrorResponse error = new ErrorResponse("User Id does not matches with requested user Id", singletonList(ex.getMessage()));
+        ErrorResponse error = new ErrorResponse("Your user Id does not matches with requested user Id", singletonList(ex.getMessage()));
         return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
     }
 

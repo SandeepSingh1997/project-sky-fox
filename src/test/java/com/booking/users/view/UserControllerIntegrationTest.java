@@ -191,7 +191,7 @@ class UserControllerIntegrationTest {
         mockMvc.perform(get("/users/{id}", user.getId())
                         .with(httpBasic("test-user", "Password@12")))
                 .andExpect(status().isBadRequest())
-                .andExpect(jsonPath("$.message").value("Customer not found with username"))
+                .andExpect(jsonPath("$.message").value("Customer not found with user id"))
                 .andExpect(jsonPath("$.details[0]").value("Customer not found"));
     }
 
@@ -204,7 +204,7 @@ class UserControllerIntegrationTest {
         mockMvc.perform(get("/users/{id}", 1)
                         .with(httpBasic("test-user", "Password@12")))
                 .andExpect(status().isBadRequest())
-                .andExpect(jsonPath("$.message").value("User Id does not matches with requested user Id"))
+                .andExpect(jsonPath("$.message").value("Your user Id does not matches with requested user Id"))
                 .andExpect(jsonPath("$.details[0]").value("You do not have access to get other user details"));
     }
 }
