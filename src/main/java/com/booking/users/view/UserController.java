@@ -2,6 +2,7 @@ package com.booking.users.view;
 
 import com.booking.config.featureTogglz.FeatureAssociation;
 import com.booking.config.featureTogglz.FeatureOptions;
+import com.booking.exceptions.CustomerNotFoundException;
 import com.booking.users.UserPrincipalService;
 import com.booking.users.repository.User;
 import io.swagger.annotations.Api;
@@ -45,5 +46,9 @@ public class UserController {
     public ResponseEntity<Object> changePassword(Principal principal, @Valid @RequestBody ChangePasswordRequest changePasswordRequest) throws Exception {
         userPrincipalService.changePassword(principal.getName(), changePasswordRequest);
         return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    public void getUserDetailsById(Long id) throws CustomerNotFoundException {
+        userPrincipalService.getUserDetailsById(id);
     }
 }

@@ -1,5 +1,8 @@
 package com.booking.users;
 
+import com.booking.exceptions.CustomerNotFoundException;
+import com.booking.roles.repository.Role;
+import com.booking.users.repository.User;
 import com.booking.users.view.ChangePasswordRequest;
 import com.booking.users.view.UserController;
 import org.junit.jupiter.api.BeforeEach;
@@ -29,5 +32,15 @@ class UserControllerTest {
         userController.changePassword(principal, changePasswordRequest);
 
         verify(userPrincipalService, times(1)).changePassword(principal.getName(), changePasswordRequest);
+    }
+
+    @Test
+    void shouldBeAbleToGetUserDetailsById() throws CustomerNotFoundException {
+        User user = new User("test-user", "Password@123", new Role(1L, "Admin"));
+        Principal principal = () -> "test-user";
+
+        userController.getUserDetailsById(user.getId());
+
+        verify(userPrincipalService, times(1)).getUserDetailsById(user.getId());
     }
 }

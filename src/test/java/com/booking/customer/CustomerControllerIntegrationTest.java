@@ -3,8 +3,6 @@ package com.booking.customer;
 import com.booking.App;
 import com.booking.movieGateway.exceptions.FormatException;
 import com.booking.passwordHistory.repository.PasswordHistoryRepository;
-import com.booking.roles.repository.Role;
-import com.booking.users.repository.User;
 import com.booking.users.repository.UserRepository;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -22,9 +20,7 @@ import java.io.IOException;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 
@@ -104,47 +100,6 @@ public class CustomerControllerIntegrationTest {
                         .content(requestJson))
                 .andExpect(status().isBadRequest());
 
-    }
-
-    @Test
-    public void shouldBeAbleToGetCustomerDetailsByUsername() throws Exception {
-        User user = new User("test-user", "password", new Role(2L, "Customer"));
-        userRepository.save(user);
-        Customer customer = new Customer("test-customer", "example@email.com", "1234567890", user);
-        customerRepository.save(customer);
-
-        mockMvc.perform(get("/customers/{username}", "test-user")
-                        .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$.name").value(customer.getName()))
-                .andExpect(jsonPath("$.username").value(customer.getUser().getUsername()))
-                .andExpect(jsonPath("$.email").value(customer.getEmail()))
-                .andExpect(jsonPath("$.mobile").value(customer.getPhoneNumber()));
-    }
-
-    @Test
-    void shouldBeAbleToReturnBadRequestWhenUsernameIsNotFound() throws Exception {
-        mockMvc.perform(get("/customers/{username}", "test-user")
-                        .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isBadRequest())
-                .andExpect(jsonPath("$.message").value("Username not found"))
-                .andExpect(jsonPath("$.details[0]").value("User not found"));
-    }
-
-    @Test
-    void shouldBeAbleToReturnBadRequestWhenCustomerIsNotFoundWithUsername() throws Exception {
-        User testUserOne = new User("test-user-1", "password", new Role(2L, "Customer"));
-        User testUserTwo = new User("test-user-2", "password", new Role(2L, "Customer"));
-        userRepository.save(testUserOne);
-        userRepository.save(testUserTwo);
-        Customer customer = new Customer("test-customer", "example@email.com", "1234567890", testUserTwo);
-        customerRepository.save(customer);
-
-        mockMvc.perform(get("/customers/{username}", "test-user-1")
-                        .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isBadRequest())
-                .andExpect(jsonPath("$.message").value("Customer not found with username"))
-                .andExpect(jsonPath("$.details[0]").value("Customer not found"));
     }
 }
 

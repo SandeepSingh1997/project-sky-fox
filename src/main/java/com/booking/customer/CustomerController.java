@@ -2,7 +2,6 @@ package com.booking.customer;
 
 import com.booking.config.featureTogglz.FeatureAssociation;
 import com.booking.config.featureTogglz.FeatureOptions;
-import com.booking.exceptions.CustomerNotFoundException;
 import com.booking.exceptions.UsernameAlreadyExistsException;
 import com.booking.handlers.models.ErrorResponse;
 import io.swagger.annotations.Api;
@@ -31,26 +30,9 @@ public class CustomerController {
     @PostMapping()
     @ApiOperation(value = "signup a customer")
     @ResponseStatus(code = HttpStatus.CREATED)
-    @ApiResponses(value = {
-            @ApiResponse(code = 201, message = "Successfully Signed up"),
-            @ApiResponse(code = 400, message = "Server cannot process request due to client error", response = ErrorResponse.class),
-            @ApiResponse(code = 500, message = "Something failed in the server", response = ErrorResponse.class)
-    })
+    @ApiResponses(value = {@ApiResponse(code = 201, message = "Successfully Signed up"), @ApiResponse(code = 400, message = "Server cannot process request due to client error", response = ErrorResponse.class), @ApiResponse(code = 500, message = "Something failed in the server", response = ErrorResponse.class)})
     public void signup(@Valid @RequestBody CustomerSignupRequest customerSignupRequest) throws UsernameAlreadyExistsException {
         Customer customer = customerSignupRequest.getCustomer();
         customerService.signup(customer);
-    }
-
-    @GetMapping("/{username}")
-    @ApiOperation(value = "get customer details")
-    @ResponseStatus(code = HttpStatus.OK)
-    @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "Successfully retrieved customer details"),
-            @ApiResponse(code = 400, message = "Server cannot process request due to client error", response = ErrorResponse.class),
-            @ApiResponse(code = 500, message = "Something failed in the server", response = ErrorResponse.class)
-    })
-    public CustomerDetailsResponse getCustomerByUsername(@PathVariable String username) throws CustomerNotFoundException {
-        Customer customer = customerService.getCustomerByUsername(username);
-        return customer.constructCustomerDetails();
     }
 }

@@ -1,5 +1,8 @@
 package com.booking.users;
 
+import com.booking.customer.Customer;
+import com.booking.customer.CustomerService;
+import com.booking.exceptions.CustomerNotFoundException;
 import com.booking.exceptions.PasswordMatchesWithLastThreePasswordsException;
 import com.booking.exceptions.PasswordMismatchException;
 import com.booking.exceptions.UsernameAlreadyExistsException;
@@ -7,7 +10,9 @@ import com.booking.passwordHistory.PasswordHistoryService;
 import com.booking.users.repository.User;
 import com.booking.users.repository.UserRepository;
 import com.booking.users.view.ChangePasswordRequest;
+import com.booking.users.view.UserDetailsResponse;
 import com.booking.users.view.UserPrincipal;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -23,11 +28,14 @@ public class UserPrincipalService implements UserDetailsService {
     private final UserRepository userRepository;
     private final PasswordHistoryService passwordHistoryService;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
+    private CustomerService customerService;
 
-    public UserPrincipalService(UserRepository userRepository, PasswordHistoryService passwordHistoryService, BCryptPasswordEncoder bCryptPasswordEncoder) {
+    @Autowired
+    public UserPrincipalService(UserRepository userRepository, PasswordHistoryService passwordHistoryService, BCryptPasswordEncoder bCryptPasswordEncoder, CustomerService customerService) {
         this.userRepository = userRepository;
         this.passwordHistoryService = passwordHistoryService;
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
+        this.customerService = customerService;
     }
 
     @Override
@@ -54,6 +62,12 @@ public class UserPrincipalService implements UserDetailsService {
         return userRepository.findByUsername(user.getUsername()).isPresent();
     }
 
+    public UserDetailsResponse getUserDetailsById(Long id) throws CustomerNotFoundException {
+        User user = getUserById(id);
+        Customer customer = customerService.getCustomerByUserId(id);
+        return new UserDetailsResponse(customer.getName(), user.getUsername(), customer.getEmail(), customer.getPhoneNumber());
+    }
+
     public void changePassword(String username, ChangePasswordRequest changePasswordRequest) throws Exception {
         User user = findUserByUsername(username);
         if (!isMatches(changePasswordRequest.getCurrentPassword(), user.getPassword()))
@@ -74,5 +88,9 @@ public class UserPrincipalService implements UserDetailsService {
 
     private boolean isMatches(String changePasswordRequest, String user) {
         return bCryptPasswordEncoder.matches(changePasswordRequest, user);
+    }
+
+    private User getUserById(Long id) {
+        return userRepository.findById(id).orElseThrow(() -> new UsernameNotFoundException("User not found"));
     }
 }

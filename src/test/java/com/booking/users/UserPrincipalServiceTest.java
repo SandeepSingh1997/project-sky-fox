@@ -1,5 +1,8 @@
 package com.booking.users;
 
+import com.booking.customer.Customer;
+import com.booking.customer.CustomerService;
+import com.booking.exceptions.CustomerNotFoundException;
 import com.booking.exceptions.PasswordMatchesWithLastThreePasswordsException;
 import com.booking.exceptions.PasswordMismatchException;
 import com.booking.passwordHistory.PasswordHistoryService;
@@ -7,6 +10,7 @@ import com.booking.roles.repository.Role;
 import com.booking.users.repository.User;
 import com.booking.users.repository.UserRepository;
 import com.booking.users.view.ChangePasswordRequest;
+import com.booking.users.view.UserDetailsResponse;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -26,14 +30,16 @@ class UserPrincipalServiceTest {
     private UserPrincipalService userPrincipalService;
     private PasswordHistoryService passwordHistoryService;
     private BCryptPasswordEncoder bCryptPasswordEncoder;
+    private CustomerService customerService;
 
 
     @BeforeEach
     void setup() {
         userRepository = mock(UserRepository.class);
         passwordHistoryService = mock(PasswordHistoryService.class);
+        customerService = mock(CustomerService.class);
         bCryptPasswordEncoder = new BCryptPasswordEncoder();
-        userPrincipalService = new UserPrincipalService(userRepository, passwordHistoryService, bCryptPasswordEncoder);
+        userPrincipalService = new UserPrincipalService(userRepository, passwordHistoryService, bCryptPasswordEncoder, customerService);
     }
 
     @Test
@@ -112,5 +118,23 @@ class UserPrincipalServiceTest {
 
         User expectedUser = userPrincipalService.findUserByUsername(user.getUsername());
         assertEquals("Customer", expectedUser.getRole().getName());
+    }
+
+    @Test
+    void shouldBeAbleToGetUserDetailsById() throws CustomerNotFoundException {
+        User user = new User("test-user", "Password@123", new Role(1L, "Admin"));
+        Customer customer = new Customer("test-customer", "test@gmail.com", "99999999", user);
+        when(userRepository.findById(user.getId())).thenReturn(Optional.of(user));
+        when(customerService.getCustomerByUserId(user.getId())).thenReturn(customer);
+
+        UserDetailsResponse userDetailsResponse = userPrincipalService.getUserDetailsById(user.getId());
+
+        assertEquals(userDetailsResponse.getName(), customer.getName());
+        assertEquals(userDetailsResponse.getEmail(), customer.getEmail());
+        assertEquals(userDetailsResponse.getUsername(), user.getUsername());
+        assertEquals(userDetailsResponse.getMobile(), customer.getPhoneNumber());
+
+        verify(userRepository, times(1)).findById(user.getId());
+        verify(customerService, times(1)).getCustomerByUserId(user.getId());
     }
 }
