@@ -1,5 +1,6 @@
 package com.booking.customer;
 
+import com.booking.bookings.view.BookingConfirmationResponse;
 import com.booking.users.repository.User;
 import com.booking.utilities.serializers.date.DateSerializer;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -91,5 +92,14 @@ public class Customer {
     @Override
     public int hashCode() {
         return Objects.hash(id, name, email, phoneNumber, user);
+    }
+
+    public CustomerDetailsResponse constructCustomerDetails() {
+        return new CustomerDetailsResponse(
+                name,
+                user.getUsername(),
+                email,
+                phoneNumber
+        );
     }
 }

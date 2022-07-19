@@ -41,7 +41,16 @@ public class CustomerController {
         customerService.signup(customer);
     }
 
-    public Customer getCustomerByUsername(String username) throws CustomerNotFoundException {
-        return customerService.getCustomerByUsername(username);
+    @GetMapping("/{username}")
+    @ApiOperation(value = "get customer details")
+    @ResponseStatus(code = HttpStatus.OK)
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Successfully retrieved customer details"),
+            @ApiResponse(code = 400, message = "Server cannot process request due to client error", response = ErrorResponse.class),
+            @ApiResponse(code = 500, message = "Something failed in the server", response = ErrorResponse.class)
+    })
+    public CustomerDetailsResponse getCustomerByUsername(@PathVariable String username) throws CustomerNotFoundException {
+        Customer customer = customerService.getCustomerByUsername(username);
+        return customer.constructCustomerDetails();
     }
 }
