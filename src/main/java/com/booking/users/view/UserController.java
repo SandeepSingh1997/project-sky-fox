@@ -2,7 +2,7 @@ package com.booking.users.view;
 
 import com.booking.config.featureTogglz.FeatureAssociation;
 import com.booking.config.featureTogglz.FeatureOptions;
-import com.booking.exceptions.CustomerNotFoundException;
+import com.booking.exceptions.UserIdDoesNotMatchesWithRequestedUserId;
 import com.booking.users.UserPrincipalService;
 import com.booking.users.repository.User;
 import io.swagger.annotations.Api;
@@ -15,6 +15,7 @@ import javax.validation.Valid;
 import java.security.Principal;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 @Api(tags = "Users")
 @RestController
@@ -46,7 +47,15 @@ public class UserController {
     }
 
     @GetMapping("/users/{id}")
-    public UserDetailsResponse getUserDetailsById(Principal principal, @PathVariable Long id) throws CustomerNotFoundException {
+    public UserDetailsResponse getUserDetailsById(Principal principal, @PathVariable Long id) throws Exception {
+        String username = principal.getName();
+        User user = userPrincipalService.findUserByUsername(username);
+        if (!isIdsMatches(id, user.getId()))
+            throw new UserIdDoesNotMatchesWithRequestedUserId("User id does not matches with requested user id");
         return userPrincipalService.getUserDetailsById(id);
+    }
+
+    private boolean isIdsMatches(Long requestedId, Long userId) {
+        return Objects.equals(requestedId, userId);
     }
 }

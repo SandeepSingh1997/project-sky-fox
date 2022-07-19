@@ -1,6 +1,6 @@
 package com.booking.users;
 
-import com.booking.exceptions.CustomerNotFoundException;
+import com.booking.exceptions.UserIdDoesNotMatchesWithRequestedUserId;
 import com.booking.roles.repository.Role;
 import com.booking.users.repository.User;
 import com.booking.users.view.ChangePasswordRequest;
@@ -10,6 +10,7 @@ import org.junit.jupiter.api.Test;
 
 import java.security.Principal;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.*;
 
 
@@ -35,12 +36,22 @@ class UserControllerTest {
     }
 
     @Test
-    void shouldBeAbleToGetUserDetailsById() throws CustomerNotFoundException {
+    void shouldBeAbleToGetUserDetailsById() throws Exception {
         User user = new User("test-user", "Password@123", new Role(1L, "Admin"));
+        when(userPrincipalService.findUserByUsername(user.getUsername())).thenReturn(user);
         Principal principal = () -> "test-user";
 
         userController.getUserDetailsById(principal, user.getId());
 
         verify(userPrincipalService, times(1)).getUserDetailsById(user.getId());
+    }
+
+    @Test
+    void shouldBeAbleToThrowExceptionWhenPrincipalUserIdIsNotMatchesWithRequestedUserId() {
+        User user = new User("test-user", "Password@123", new Role(1L, "Admin"));
+        when(userPrincipalService.findUserByUsername(user.getUsername())).thenReturn(user);
+        Principal principal = () -> "test-user";
+
+        assertThrows(UserIdDoesNotMatchesWithRequestedUserId.class, () -> userController.getUserDetailsById(principal, 1L));
     }
 }
