@@ -12,17 +12,17 @@ import static org.mockito.Mockito.*;
 
 class UserControllerTest {
 
-    UserPrincipalService userPrincipalService;
+    private UserPrincipalService userPrincipalService;
+    private UserController userController;
 
     @BeforeEach
     void setUp() {
         userPrincipalService = mock(UserPrincipalService.class);
+        userController = new UserController(userPrincipalService);
     }
 
     @Test
     void shouldAbleToUpdatePasswordSuccessfully() throws Exception {
-
-        UserController userController = new UserController(userPrincipalService);
         ChangePasswordRequest changePasswordRequest = new ChangePasswordRequest("old@Password1", "new@Password1");
         Principal principal = () -> "test-user";
 

@@ -14,7 +14,6 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.io.ByteArrayOutputStream;
 import java.util.List;
 
 import static com.booking.passwordHistory.repository.Constants.THREE;
@@ -23,7 +22,7 @@ import static com.booking.passwordHistory.repository.Constants.THREE;
 public class UserPrincipalService implements UserDetailsService {
     private final UserRepository userRepository;
     private final PasswordHistoryService passwordHistoryService;
-    private BCryptPasswordEncoder bCryptPasswordEncoder;
+    private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
     public UserPrincipalService(UserRepository userRepository, PasswordHistoryService passwordHistoryService, BCryptPasswordEncoder bCryptPasswordEncoder) {
         this.userRepository = userRepository;
@@ -43,8 +42,7 @@ public class UserPrincipalService implements UserDetailsService {
     }
 
     public User add(User user) throws UsernameAlreadyExistsException {
-
-        if(userAlreadyExists(user))throw new UsernameAlreadyExistsException();
+        if (userAlreadyExists(user)) throw new UsernameAlreadyExistsException();
         String hashedPassword = bCryptPasswordEncoder.encode(user.getPassword());
         user.setPassword(hashedPassword);
         User savedUser = userRepository.save(user);
@@ -52,8 +50,8 @@ public class UserPrincipalService implements UserDetailsService {
         return savedUser;
     }
 
-    private boolean userAlreadyExists(User user){
-        return userRepository.findByUsername(user.getUsername()).isEmpty() ? false : true;
+    private boolean userAlreadyExists(User user) {
+        return userRepository.findByUsername(user.getUsername()).isPresent();
     }
 
     public void changePassword(String username, ChangePasswordRequest changePasswordRequest) throws Exception {
@@ -76,10 +74,5 @@ public class UserPrincipalService implements UserDetailsService {
 
     private boolean isMatches(String changePasswordRequest, String user) {
         return bCryptPasswordEncoder.matches(changePasswordRequest, user);
-    }
-
-
-    public String getUserRoleName(String username) {
-        return findUserByUsername(username).getRole().getName();
     }
 }

@@ -3,6 +3,7 @@ package com.booking.users.view;
 import com.booking.config.featureTogglz.FeatureAssociation;
 import com.booking.config.featureTogglz.FeatureOptions;
 import com.booking.users.UserPrincipalService;
+import com.booking.users.repository.User;
 import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -32,9 +33,10 @@ public class UserController {
     Map<String, Object> login(Principal principal) {
         String username = principal.getName();
         Map<String, Object> userDetails = new HashMap<>();
-        userDetails.put("username", username);
-        String userRole=userPrincipalService.getUserRoleName(username);
-        userDetails.put("role", userRole);
+        User user = userPrincipalService.findUserByUsername(username);
+        userDetails.put("id", user.getId());
+        userDetails.put("username", user.getUsername());
+        userDetails.put("role", user.getRole().getName());
         return userDetails;
     }
 

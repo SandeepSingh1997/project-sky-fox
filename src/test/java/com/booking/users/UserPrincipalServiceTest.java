@@ -40,7 +40,7 @@ class UserPrincipalServiceTest {
     void shouldBeAbleToChangePasswordInRepository() throws Exception {
         ChangePasswordRequest changePasswordRequest = new ChangePasswordRequest("Old@Password1", "New@Password1");
 
-        User user = new User("username", "Old@Password1", new Role(1L,"Admin"));
+        User user = new User("username", "Old@Password1", new Role(1L, "Admin"));
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
 
         when(userRepository.findByUsername(user.getUsername())).thenReturn(Optional.of(user));
@@ -54,7 +54,7 @@ class UserPrincipalServiceTest {
     void shouldReturnExceptionWhenReceivedCurrentPasswordDoesNotMatchTheCurrentPasswordInTheRepository() {
         ChangePasswordRequest changePasswordRequest = new ChangePasswordRequest("Old@Password1", "New@Password1");
 
-        User user = new User("username", "differentCurrent@Password", new Role(1L,"Admin"));
+        User user = new User("username", "differentCurrent@Password", new Role(1L, "Admin"));
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
 
         when(userRepository.findByUsername(user.getUsername())).thenReturn(Optional.of(user));
@@ -67,7 +67,7 @@ class UserPrincipalServiceTest {
     @Test
     void shouldNotBeAbleToChangePasswordWhenNewPasswordMatchesWithAnyOneOfPreviousThreePasswords() throws PasswordMismatchException {
 
-        User user = new User("test-user", "Password@123", new Role(1L,"Admin"));
+        User user = new User("test-user", "Password@123", new Role(1L, "Admin"));
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
 
         List<String> passwords = new ArrayList<>();
@@ -88,7 +88,7 @@ class UserPrincipalServiceTest {
     @Test
     void shouldBeAbleToSaveNewPasswordInPasswordHistoryTableWhenItDoesNotMatchesWithLastThreePasswords() throws Exception {
 
-        User user = new User("test-user", "Password@123", new Role(1L,"Admin"));
+        User user = new User("test-user", "Password@123", new Role(1L, "Admin"));
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
 
         List<String> passwords = new ArrayList<>();
@@ -106,12 +106,11 @@ class UserPrincipalServiceTest {
 
     @Test
     void shouldBeAbleToGetUserRoleBasedOnUserName() {
-        User user = new User("test-user", "Password@123", new Role(2L,"Customer"));
+        User user = new User("test-user", "Password@123", new Role(2L, "Customer"));
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         when(userRepository.findByUsername(user.getUsername())).thenReturn(Optional.of(user));
 
-        String role=userPrincipalService.getUserRoleName(user.getUsername());
-        assertEquals("Customer",role);
-
+        User expectedUser = userPrincipalService.findUserByUsername(user.getUsername());
+        assertEquals("Customer", expectedUser.getRole().getName());
     }
 }
