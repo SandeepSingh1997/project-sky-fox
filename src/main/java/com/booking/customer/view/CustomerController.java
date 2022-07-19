@@ -1,7 +1,9 @@
-package com.booking.customer;
+package com.booking.customer.view;
 
 import com.booking.config.featureTogglz.FeatureAssociation;
 import com.booking.config.featureTogglz.FeatureOptions;
+import com.booking.customer.CustomerService;
+import com.booking.customer.repository.Customer;
 import com.booking.exceptions.UsernameAlreadyExistsException;
 import com.booking.handlers.models.ErrorResponse;
 import io.swagger.annotations.Api;

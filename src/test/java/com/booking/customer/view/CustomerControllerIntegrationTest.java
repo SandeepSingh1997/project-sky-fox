@@ -1,6 +1,7 @@
-package com.booking.customer;
+package com.booking.customer.view;
 
 import com.booking.App;
+import com.booking.customer.repository.CustomerRepository;
 import com.booking.movieGateway.exceptions.FormatException;
 import com.booking.passwordHistory.repository.PasswordHistoryRepository;
 import com.booking.users.repository.UserRepository;

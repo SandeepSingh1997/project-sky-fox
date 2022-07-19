@@ -1,6 +1,8 @@
 package com.booking.customer;
 
 
+import com.booking.customer.repository.Customer;
+import com.booking.customer.repository.CustomerRepository;
 import com.booking.exceptions.UsernameAlreadyExistsException;
 import com.booking.roles.repository.Role;
 import com.booking.users.UserPrincipalService;

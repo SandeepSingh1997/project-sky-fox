@@ -1,4 +1,4 @@
-package com.booking.customer;
+package com.booking.customer.repository;
 
 
 import com.booking.roles.repository.Role;
@@ -25,7 +25,7 @@ public class CustomerTest {
     public void beforeEach() {
         validator = Validation.buildDefaultValidatorFactory().getValidator();
 
-        user = new User("seed-user-1", "foobar", new Role(1L,"Admin"));
+        user = new User("seed-user-1", "foobar", new Role(1L, "Admin"));
 
     }
 

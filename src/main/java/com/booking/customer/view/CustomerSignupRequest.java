@@ -1,5 +1,6 @@
-package com.booking.customer;
+package com.booking.customer.view;
 
+import com.booking.customer.repository.Customer;
 import com.booking.roles.repository.Role;
 import com.booking.users.repository.User;
 import com.fasterxml.jackson.annotation.JsonProperty;

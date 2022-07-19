@@ -1,4 +1,4 @@
-package com.booking.customer;
+package com.booking.customer.repository;
 
 import com.booking.users.repository.User;
 import com.fasterxml.jackson.annotation.JsonIgnore;

@@ -1,5 +1,6 @@
-package com.booking.customer;
+package com.booking.customer.repository;
 
+import com.booking.customer.repository.Customer;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;

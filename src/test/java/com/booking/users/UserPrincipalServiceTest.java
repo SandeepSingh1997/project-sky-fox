@@ -1,7 +1,7 @@
 package com.booking.users;
 
-import com.booking.customer.Customer;
-import com.booking.customer.CustomerRepository;
+import com.booking.customer.repository.Customer;
+import com.booking.customer.repository.CustomerRepository;
 import com.booking.exceptions.CustomerNotFoundException;
 import com.booking.exceptions.PasswordMatchesWithLastThreePasswordsException;
 import com.booking.exceptions.PasswordMismatchException;

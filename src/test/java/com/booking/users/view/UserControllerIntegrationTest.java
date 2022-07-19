@@ -1,8 +1,8 @@
 package com.booking.users.view;
 
 import com.booking.App;
-import com.booking.customer.Customer;
-import com.booking.customer.CustomerRepository;
+import com.booking.customer.repository.Customer;
+import com.booking.customer.repository.CustomerRepository;
 import com.booking.passwordHistory.repository.PasswordHistory;
 import com.booking.passwordHistory.repository.PasswordHistoryPK;
 import com.booking.passwordHistory.repository.PasswordHistoryRepository;
