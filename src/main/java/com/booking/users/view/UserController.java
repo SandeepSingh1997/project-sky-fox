@@ -9,10 +9,7 @@ import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.security.Principal;
@@ -48,7 +45,8 @@ public class UserController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    public void getUserDetailsById(Long id) throws CustomerNotFoundException {
-        userPrincipalService.getUserDetailsById(id);
+    @GetMapping("/users/{id}")
+    public UserDetailsResponse getUserDetailsById(Principal principal, @PathVariable Long id) throws CustomerNotFoundException {
+        return userPrincipalService.getUserDetailsById(id);
     }
 }

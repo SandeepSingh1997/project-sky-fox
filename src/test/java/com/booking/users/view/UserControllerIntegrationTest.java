@@ -1,11 +1,12 @@
 package com.booking.users.view;
 
 import com.booking.App;
+import com.booking.customer.Customer;
+import com.booking.customer.CustomerRepository;
 import com.booking.passwordHistory.repository.PasswordHistory;
 import com.booking.passwordHistory.repository.PasswordHistoryPK;
 import com.booking.passwordHistory.repository.PasswordHistoryRepository;
 import com.booking.roles.repository.Role;
-import com.booking.roles.repository.RoleRepository;
 import com.booking.users.repository.User;
 import com.booking.users.repository.UserRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -40,31 +41,39 @@ class UserControllerIntegrationTest {
 
     @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
+
     @Autowired
     private MockMvc mockMvc;
+
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private CustomerRepository customerRepository;
+
     @Autowired
     private PasswordHistoryRepository passwordHistoryRepository;
+
     @Autowired
     private ObjectMapper objectMapper;
 
     @BeforeEach
     public void before() {
         passwordHistoryRepository.deleteAll();
+        customerRepository.deleteAll();
         userRepository.deleteAll();
     }
 
     @AfterEach
     public void after() {
         passwordHistoryRepository.deleteAll();
+        customerRepository.deleteAll();
         userRepository.deleteAll();
     }
 
     @Test
     public void shouldLoginSuccessfully() throws Exception {
-
-        User user = new User("test-user", "Password@12", new Role(1L,"Admin"));
+        User user = new User("test-user", "Password@12", new Role(1L, "Admin"));
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         userRepository.save(user);
 
@@ -81,8 +90,7 @@ class UserControllerIntegrationTest {
 
     @Test
     void shouldBeAbleToUpdateThePasswordSuccessfully() throws Exception {
-
-        User user = new User("test-user", "Password@12", new Role(1L,"Admin"));
+        User user = new User("test-user", "Password@12", new Role(1L, "Admin"));
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         userRepository.save(user);
 
@@ -98,8 +106,7 @@ class UserControllerIntegrationTest {
 
     @Test
     void shouldNotBeAbleToUpdateThePasswordWhenValidationFails() throws Exception {
-
-        User user = new User("test-user", "Password@12", new Role(1L,"Admin"));
+        User user = new User("test-user", "Password@12", new Role(1L, "Admin"));
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         userRepository.save(user);
 
@@ -115,8 +122,7 @@ class UserControllerIntegrationTest {
 
     @Test
     void shouldNotBeAbleToUpdateThePasswordWhenProvidedPasswordMisMatchExistingPassword() throws Exception {
-
-        User user = new User("test-user", "Password@12", new Role(1L,"Admin"));
+        User user = new User("test-user", "Password@12", new Role(1L, "Admin"));
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         userRepository.save(user);
 
@@ -134,8 +140,7 @@ class UserControllerIntegrationTest {
 
     @Test
     void shouldNotBeAbleToUpdateThePasswordWhenProvidedNewPasswordMatchesWithLastThreePasswords() throws Exception {
-
-        User user = new User("test-user", "Password@12", new Role(1L,"Admin"));
+        User user = new User("test-user", "Password@12", new Role(1L, "Admin"));
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
 
         userRepository.save(user);
@@ -158,5 +163,35 @@ class UserControllerIntegrationTest {
                 .andExpect(status().isBadRequest())
                 .andExpect(jsonPath("$.message").value("Password matches with last three passwords"))
                 .andExpect(jsonPath("$.details[0]").value("Entered new password matches with recent three passwords"));
+    }
+
+    @Test
+    void shouldBeAbleToGetUserDetailsById() throws Exception {
+        User user = new User("test-user", "Password@12", new Role(2L, "Customer"));
+        user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+        userRepository.save(user);
+        Customer customer = new Customer("test-customer", "example@email.com", "1234567890", user);
+        customerRepository.save(customer);
+
+        mockMvc.perform(get("/users/{id}", user.getId())
+                        .with(httpBasic("test-user", "Password@12")))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.name").value(customer.getName()))
+                .andExpect(jsonPath("$.username").value(customer.getUser().getUsername()))
+                .andExpect(jsonPath("$.email").value(customer.getEmail()))
+                .andExpect(jsonPath("$.mobile").value(customer.getPhoneNumber()));
+    }
+
+    @Test
+    void shouldBeAbleToReturnBadRequestWhenCustomerIsNotFoundWithUsername() throws Exception {
+        User user = new User("test-user", "Password@12", new Role(2L, "Customer"));
+        user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+        userRepository.save(user);
+
+        mockMvc.perform(get("/users/{id}", user.getId())
+                        .with(httpBasic("test-user", "Password@12")))
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.message").value("Customer not found with username"))
+                .andExpect(jsonPath("$.details[0]").value("Customer not found"));
     }
 }

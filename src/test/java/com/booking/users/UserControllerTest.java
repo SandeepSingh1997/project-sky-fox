@@ -39,7 +39,7 @@ class UserControllerTest {
         User user = new User("test-user", "Password@123", new Role(1L, "Admin"));
         Principal principal = () -> "test-user";
 
-        userController.getUserDetailsById(user.getId());
+        userController.getUserDetailsById(principal, user.getId());
 
         verify(userPrincipalService, times(1)).getUserDetailsById(user.getId());
     }
