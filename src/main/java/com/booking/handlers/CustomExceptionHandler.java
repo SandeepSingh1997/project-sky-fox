@@ -73,19 +73,26 @@ public class CustomExceptionHandler extends ResponseEntityExceptionHandler {
     }
 
     @ExceptionHandler(UsernameAlreadyExistsException.class)
-    public ResponseEntity<ErrorResponse> handleUsernameAlreadyExistsException(UsernameAlreadyExistsException ex){
+    public ResponseEntity<ErrorResponse> handleUsernameAlreadyExistsException(UsernameAlreadyExistsException ex) {
         ErrorResponse error = new ErrorResponse("Username Already exists", singletonList(ex.getMessage()));
         return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler(UsernameNotFoundException.class)
-    public ResponseEntity<ErrorResponse> handleUsernameNotFoundException(UsernameNotFoundException ex){
+    public ResponseEntity<ErrorResponse> handleUsernameNotFoundException(UsernameNotFoundException ex) {
         ErrorResponse error = new ErrorResponse("Username not found", singletonList(ex.getMessage()));
         return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
     }
+
     @ExceptionHandler(CustomerNotFoundException.class)
-    public ResponseEntity<ErrorResponse> handleCustomerNotFoundException(CustomerNotFoundException ex){
+    public ResponseEntity<ErrorResponse> handleCustomerNotFoundException(CustomerNotFoundException ex) {
         ErrorResponse error = new ErrorResponse("Customer not found with username", singletonList(ex.getMessage()));
+        return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(UserIdDoesNotMatchesWithRequestedUserId.class)
+    public ResponseEntity<ErrorResponse> handleUserIdDoesNotMatchesWithRequestedUserId(UserIdDoesNotMatchesWithRequestedUserId ex) {
+        ErrorResponse error = new ErrorResponse("User Id does not matches with requested user Id", singletonList(ex.getMessage()));
         return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
     }
 

@@ -51,7 +51,7 @@ public class UserController {
         String username = principal.getName();
         User user = userPrincipalService.findUserByUsername(username);
         if (!isIdsMatches(id, user.getId()))
-            throw new UserIdDoesNotMatchesWithRequestedUserId("User id does not matches with requested user id");
+            throw new UserIdDoesNotMatchesWithRequestedUserId("You do not have access to get other user details");
         return userPrincipalService.getUserDetailsById(id);
     }
 

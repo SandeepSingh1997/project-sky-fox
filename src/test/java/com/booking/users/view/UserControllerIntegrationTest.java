@@ -194,4 +194,17 @@ class UserControllerIntegrationTest {
                 .andExpect(jsonPath("$.message").value("Customer not found with username"))
                 .andExpect(jsonPath("$.details[0]").value("Customer not found"));
     }
+
+    @Test
+    void shouldBeAbleToReturnBadRequestWhenPrincipalUserIdIsNotMatchesWithRequestedUserId() throws Exception {
+        User user = new User("test-user", "Password@12", new Role(2L, "Customer"));
+        user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+        userRepository.save(user);
+
+        mockMvc.perform(get("/users/{id}", 1)
+                        .with(httpBasic("test-user", "Password@12")))
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.message").value("User Id does not matches with requested user Id"))
+                .andExpect(jsonPath("$.details[0]").value("You do not have access to get other user details"));
+    }
 }
