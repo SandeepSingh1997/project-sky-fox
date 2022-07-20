@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.math.BigDecimal;
+import java.security.Principal;
 import java.sql.Date;
 
 @Api(tags = "Revenue")
@@ -34,7 +35,7 @@ public class RevenueController {
             @ApiResponse(code = 400, message = "Server cannot process request due to client error", response = ErrorResponse.class),
             @ApiResponse(code = 500, message = "Something failed in the server", response = ErrorResponse.class)
     })
-    public BigDecimal getRevenue(@Valid @RequestParam(name = "date") Date date) {
+    public BigDecimal getRevenue(Principal principal, @Valid @RequestParam(name = "date") Date date) {
         return revenueService.revenueByDate(date);
     }
 }

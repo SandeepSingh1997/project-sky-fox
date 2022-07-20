@@ -19,4 +19,6 @@ fileignoreconfig:
   checksum: e97c9faa7fe7644b15a5c00f59710f6606c5a638610a7169164cf6957f04183c
 - filename: src/main/resources/db/migration/V1.19__UpdateUsertableSetRoleId.sql
   checksum: 26ad5f85dec84d5fee1dbccfd038fe18efaed2b818637a4dfdb4cb63da10bca7
+- filename: src/test/java/com/booking/revenue/view/RevenueControllerIntegrationTest.java
+  checksum: eb1ccb751654a1fd7db5ee52aafdb987c10d6e55895ddd9094534abf261f0306
 version: ""

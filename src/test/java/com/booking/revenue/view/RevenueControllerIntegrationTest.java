@@ -67,6 +67,7 @@ public class RevenueControllerIntegrationTest {
     }
 
     @Test
+    @WithMockUser(username = "seed-user-2", password = "Foobar@123", authorities={"Admin"})
     public void should_get_revenue_correctly() throws Exception {
         final var slotOne =
                 slotRepository.save(new Slot("Test slot one", Time.valueOf("09:30:00"), Time.valueOf("12:00:00")));
@@ -97,6 +98,7 @@ public class RevenueControllerIntegrationTest {
     }
 
     @Test
+    @WithMockUser(username = "seed-user-2", password = "Foobar@123", authorities={"Admin"})
     public void should_get_zero_revenue_for_no_bookings() throws Exception {
         final var slotOne =
                 slotRepository.save(new Slot("Test slot one", Time.valueOf("09:30:00"), Time.valueOf("12:00:00")));
