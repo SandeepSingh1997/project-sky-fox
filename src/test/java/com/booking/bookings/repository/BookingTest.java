@@ -50,25 +50,6 @@ public class BookingTest {
     }
 
     @Test
-    public void should_return_only_fields_reqiured_for_booking_confirmation() {
-        BigDecimal amountPaid = BigDecimal.valueOf(244.99);
-        final Booking booking = new Booking(date, show, movieAudience, 2, amountPaid);
-
-        BookingConfirmationResponse bookingConfirmationResponse = booking.constructBookingConfirmation();
-
-        BookingConfirmationResponse expectedBookingConfirmationResponse = new BookingConfirmationResponse(
-                null,
-                movieAudience.getName(),
-                date,
-                slot.getStartTime(),
-                amountPaid,
-                2
-        );
-
-        assertThat(bookingConfirmationResponse, is(equalTo(expectedBookingConfirmationResponse)));
-    }
-
-    @Test
     public void should_not_allow_null_fields() {
         Booking booking = new Booking(null, null, null, null, null);
 

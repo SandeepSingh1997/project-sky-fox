@@ -69,16 +69,6 @@ public class Booking {
     public Booking() {
     }
 
-    public BookingConfirmationResponse constructBookingConfirmation() {
-        return new BookingConfirmationResponse(
-                id,
-                movieAudience.getName(),
-                show.getDate(),
-                show.getSlot().getStartTime(),
-                amountPaid,
-                noOfSeats
-        );
-    }
 
     public Long getId() {
         return id;

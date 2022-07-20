@@ -38,13 +38,20 @@ public class BookingConfirmationResponse {
     @ApiModelProperty(name = "noOfSeats", value = "No of seats booked", required = true, position = 6)
     private int noOfSeats;
 
-    public BookingConfirmationResponse(Long id, String customerName, Date showDate, Time startTime, BigDecimal amountPaid, int noOfSeats) {
+
+    @JsonProperty
+    @ApiModelProperty(name = "email id", value = "email id", required = false, position = 7)
+    private String email;
+
+
+    public BookingConfirmationResponse(Long id, String customerName, Date showDate, Time startTime, BigDecimal amountPaid, int noOfSeats, String email) {
         this.id = id;
         this.customerName = customerName;
         this.showDate = showDate;
         this.startTime = startTime;
         this.amountPaid = amountPaid;
         this.noOfSeats = noOfSeats;
+        this.email = email;
     }
 
     @Override
@@ -68,12 +75,12 @@ public class BookingConfirmationResponse {
     @Override
     public String toString() {
         return "BookingConfirmation{" +
-                "id=" + id +
                 ", customerName='" + customerName + '\'' +
                 ", showDate=" + showDate +
                 ", startTime=" + startTime +
                 ", amountPaid=" + amountPaid +
                 ", noOfSeats=" + noOfSeats +
+                ",email=" + email +
                 '}';
     }
 }
