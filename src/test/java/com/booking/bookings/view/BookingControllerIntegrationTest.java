@@ -2,6 +2,9 @@ package com.booking.bookings.view;
 
 import com.booking.App;
 import com.booking.bookings.repository.BookingRepository;
+import com.booking.customer.CustomerService;
+import com.booking.customer.repository.Customer;
+import com.booking.customer.repository.CustomerRepository;
 import com.booking.movieAudience.repository.MovieAudienceRepository;
 import com.booking.movieGateway.MovieGateway;
 import com.booking.movieGateway.exceptions.FormatException;
@@ -74,6 +77,9 @@ public class BookingControllerIntegrationTest {
     @Autowired
     private PasswordHistoryRepository passwordHistoryRepository;
 
+    @Autowired
+    private CustomerRepository customerRepository;
+
     @MockBean
     private MovieGateway movieGateway;
     private Show showOne;
@@ -85,6 +91,7 @@ public class BookingControllerIntegrationTest {
         slotRepository.deleteAll();
         movieAudienceRepository.deleteAll();
         passwordHistoryRepository.deleteAll();
+        customerRepository.deleteAll();
         userRepository.deleteAll();
 
         when(movieGateway.getMovieFromId("movie_1"))
@@ -109,18 +116,18 @@ public class BookingControllerIntegrationTest {
         slotRepository.deleteAll();
         movieAudienceRepository.deleteAll();
         passwordHistoryRepository.deleteAll();
+        customerRepository.deleteAll();
         userRepository.deleteAll();
     }
 
     @Test
-    public void should_save_booking_and_customer_detail() throws Exception {
+    public void should_save_booking_and_customer_detail_for_admin() throws Exception {
         final String requestJson = "{" +
                 "\"date\": \"2020-06-01\"," +
                 "\"showId\": " + showOne.getId() + "," +
                 "\"movieAudience\": " + "{\"name\": \"MovieAudience 1\", \"phoneNumber\": \"9922334455\"}," +
                 "\"noOfSeats\": 2" +
                 "}";
-
 
         User user = new User("test-user", "Password@12", new Role(1L, "Admin"));
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
@@ -179,14 +186,12 @@ public class BookingControllerIntegrationTest {
                 "\"noOfSeats\": 11" +
                 "}";
 
-
         mockMvc.perform(post("/bookings")
                         .with(httpBasic("test-user", "Password@12"))
                         .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
                         .content(overCapacityRequest))
                 .andExpect(status().is5xxServerError())
                 .andReturn();
-
     }
 
     private void setupBookingSeatsForSameShow(User user) throws Exception {
@@ -206,5 +211,37 @@ public class BookingControllerIntegrationTest {
                     .andDo(print())
                     .andReturn();
         }
+    }
+    @Test
+    public void should_save_booking_and_customer_detail_for_customer() throws Exception {
+        final String requestJson = "{" +
+                "\"date\": \"2020-06-01\"," +
+                "\"showId\": " + showOne.getId() + "," +
+                "\"movieAudience\": " + "{\"name\": \"MovieAudience 1\", \"phoneNumber\": \"9922334455\"}," +
+                "\"noOfSeats\": 2" +
+                "}";
+
+        User user = new User("test-user", "Password@12", new Role(1L, "Admin"));
+        user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+        userRepository.save(user);
+        Customer customer = new Customer("MovieAudience 1","abc@mail.com","9922334455",user);
+        customerRepository.save(customer);
+
+        mockMvc.perform(post("/bookings")
+                        .with(httpBasic("test-user", "Password@12"))
+                        .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
+                        .content(requestJson))
+                .andExpect(status().isCreated())
+                .andExpect(jsonPath("$.id").exists())
+                .andExpect(content().json("{" +
+                        "\"customerName\":\"MovieAudience 1\"," +
+                        "\"showDate\":\"2020-01-01\"," +
+                        "\"startTime\":\"09:30:00\"," +
+                        "\"amountPaid\":499.98," +
+                        "\"noOfSeats\":2}" +
+                        "\"email\": abc@mail.com,"));
+
+        assertThat(movieAudienceRepository.findAll().size(), is(1));
+        assertThat(bookingRepository.findAll().size(), is(1));
     }
 }

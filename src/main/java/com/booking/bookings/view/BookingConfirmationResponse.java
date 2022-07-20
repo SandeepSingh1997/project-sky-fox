@@ -54,6 +54,34 @@ public class BookingConfirmationResponse {
         this.email = email;
     }
 
+    public Long getId() {
+        return id;
+    }
+
+    public String getCustomerName() {
+        return customerName;
+    }
+
+    public Date getShowDate() {
+        return showDate;
+    }
+
+    public Time getStartTime() {
+        return startTime;
+    }
+
+    public BigDecimal getAmountPaid() {
+        return amountPaid;
+    }
+
+    public int getNoOfSeats() {
+        return noOfSeats;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

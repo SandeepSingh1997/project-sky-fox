@@ -54,4 +54,20 @@ public class BookingRequest {
         this.movieAudience = movieAudience;
         this.noOfSeats = noOfSeats;
     }
+
+    public void setDate(Date date) {
+        this.date = date;
+    }
+
+    public void setShowId(Long showId) {
+        this.showId = showId;
+    }
+
+    public void setMovieAudience(MovieAudience movieAudience) {
+        this.movieAudience = movieAudience;
+    }
+
+    public void setNoOfSeats(int noOfSeats) {
+        this.noOfSeats = noOfSeats;
+    }
 }
