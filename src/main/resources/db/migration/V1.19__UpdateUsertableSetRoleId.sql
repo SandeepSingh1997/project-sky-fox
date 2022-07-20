@@ -1,0 +1,1 @@
+UPDATE USERTABLE SET ROLE_ID=1 WHERE USERNAME IN ('seed-user-1','seed-user-2','seed-user-3');
