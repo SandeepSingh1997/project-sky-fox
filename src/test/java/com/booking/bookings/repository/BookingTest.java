@@ -6,6 +6,7 @@ import com.booking.shows.respository.Show;
 import com.booking.slots.repository.Slot;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.validation.ConstraintViolation;
 import javax.validation.Validation;

@@ -37,6 +37,8 @@ public class DefaultMovieGateway implements MovieGateway {
         final var request = requestBuilder.url(appConfig.getMovieServiceHost() + "movies/" + id).build();
         final var response = httpClient.newCall(request).execute();
         final var jsonResponse = requireNonNull(response.body()).string();
+
         return objectMapper.readValue(jsonResponse, MovieServiceResponse.class).toMovie();
+
     }
 }

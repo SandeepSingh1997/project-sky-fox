@@ -12,16 +12,16 @@ public class MovieServiceResponse {
     @JsonProperty("imdbID")
     private String imdbId;
 
-    @JsonProperty("Title")
+    @JsonProperty("title")
     private String title;
 
-    @JsonProperty("Runtime")
+    @JsonProperty("runtime")
     private String runtime;
 
-    @JsonProperty("Plot")
+    @JsonProperty("plot")
     private String plot;
 
-    @JsonProperty("Poster")
+    @JsonProperty("posterUrl")
     private String posterURL;
 
     @JsonProperty("imdbRating")
@@ -45,6 +45,7 @@ public class MovieServiceResponse {
         try {
             final var minutesString = runtime.replace("min", "").trim();
             minutes = Integer.parseInt(minutesString);
+
         } catch (Exception e) {
             throw new FormatException("runtime");
         }
